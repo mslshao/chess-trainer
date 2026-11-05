@@ -17,12 +17,20 @@ Open `chess-trainer.html` in a browser. Progress saves to `localStorage`.
 `HANDOFF.md` is the running session handoff: current state, schema versions,
 verification results, conventions, and remaining work. Newest entries first.
 
+## Opening library
+
+`library/` holds the bundled opening data as standalone JSON: the 3,865-line
+Lichess catalogue (opening-pack format), the 34 family lessons, and the built-in
+personal library with its 12 study positions. `node library/extract.cjs`
+regenerates them from the HTML. See `library/README.md`.
+
 ## Not yet in this repo
 
 The opening catalogue, family lessons, engine and test blocks are generated into
 the HTML by `chess-opening-packs/build.cjs`. Those build sources are not
-committed here yet, so the HTML is currently the only copy in version control.
-Edit the source modules, not their generated copies, once they are added.
+committed here yet. `library/` holds extracted copies of the data, but the build
+script and source modules exist only outside this repo. Edit the source modules,
+not their generated copies, once they are added.
 
 ## Data
 
