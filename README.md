@@ -25,10 +25,10 @@ kept for the reasoning behind past decisions.
 
 ## Opening library
 
-`library/` holds the bundled opening data as standalone JSON: the 3,865-line
-Lichess catalogue (opening-pack format), the 34 family lessons, and the built-in
-personal library with its 12 study positions. `node library/extract.cjs`
-regenerates them from the HTML. See `library/README.md`.
+The catalogue and family lessons live in `chess-opening-packs/`. `library/` holds
+the built-in personal library (40 lines, 4 traps, 3 plans, 12 study positions) as
+importable JSON; `node library/extract.cjs` regenerates it from the HTML. See
+`library/README.md`.
 
 ## Maintaining the build
 

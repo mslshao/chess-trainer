@@ -58,7 +58,7 @@ finish with his usual original file updated, while all development stays in Git.
 | Path | Role |
 | --- | --- |
 | `chess-trainer.html` | The deliverable |
-| `library/` | Bundled opening data as JSON, extracted from the HTML by `library/extract.cjs`. Copies, not sources |
+| `library/` | Built-in personal library as importable JSON, exported from the HTML by `library/extract.cjs`. A copy, not a source |
 | `chess-opening-packs/` | Offline build sources, catalogue pack, lesson authoring source and pack guide |
 | `tests/run-node.cjs` | The engine suite in Node |
 | `tests/browser/` | Portable Edge harnesses and run instructions |
@@ -71,10 +71,9 @@ OneDrive. `.gitattributes` keeps text files on LF line endings. The previous loc
 HTML matched the original upload SHA-256 exactly, so no local changes needed
 merging. Earlier results, screenshots and HTML backups remain outside the repo.
 
-The catalogue and lesson JSON in `library/` are identical as parsed JSON to
-`chess-opening-packs/lichess-catalogue.json` and `main-families.json`. Those two
-extractions duplicate the build inputs and are retained pending a decision to
-remove them. `repertoire.library.json` is a separate personal-library export.
+`library/` holds only `repertoire.library.json`. The catalogue and lesson copies
+that duplicated `chess-opening-packs/lichess-catalogue.json` and
+`main-families.json` were removed on 2026-11-05.
 
 ## Generated and hand-maintained code
 
