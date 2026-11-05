@@ -2258,11 +2258,11 @@ function fenAfterSan(sanList, startFen){
 const OPENING_SRC = 'Standard opening theory; confirm against a primary source before marking verified.';
 const REPERTOIRE_SEED = [
   /* ---- core: White, 1.e4 e5 ---- */
-  { id: 'ruyLopez', eco: 'C88', nameEn: 'Ruy Lopez, Closed',
+  { id: 'ruyLopez', eco: 'C90', nameEn: 'Ruy Lopez, Closed',
     movesSan: ['e4','e5','Nf3','Nc6','Bb5','a6','Ba4','Nf6','O-O','Be7','Re1','b5','Bb3','d6','c3','O-O'],
     sideToMove: 'white', trapField: '', planField: '', sourceField: OPENING_SRC, verified: false, tag: 'core-repertoire',
     idea: 'Long-term pressure on e5 and a slow queenside bind; strong for White strategically, but Black is fully sound and the theory runs deep.' },
-  { id: 'italianGiuoco', eco: 'C50', nameEn: 'Italian Game, Giuoco Pianissimo',
+  { id: 'italianGiuoco', eco: 'C54', nameEn: 'Italian Game, Giuoco Pianissimo',
     movesSan: ['e4','e5','Nf3','Nc6','Bc4','Bc5','c3','Nf6','d3'], sideToMove: 'white',
     trapField: 'legalMate', planField: '', sourceField: OPENING_SRC, verified: false, tag: 'core-repertoire',
     starter: true,
@@ -2306,7 +2306,7 @@ const REPERTOIRE_SEED = [
     trapField: '', planField: '', sourceField: OPENING_SRC, verified: false, tag: 'core-repertoire',
     idea: 'Sacrifices a pawn for rapid development and a kingside attack; dangerous and fun, but objectively risky since it loosens White’s own king.' },
   /* ---- core: White, 1.d4 ---- */
-  { id: 'queensGambitDeclined', eco: 'D37', nameEn: "Queen's Gambit Declined",
+  { id: 'queensGambitDeclined', eco: 'D53', nameEn: "Queen's Gambit Declined",
     movesSan: ['d4','d5','c4','e6','Nc3','Nf6','Bg5','Be7'], sideToMove: 'white',
     trapField: 'elephantTrap', planField: '', sourceField: OPENING_SRC, verified: false, tag: 'core-repertoire',
     starter: true,
@@ -2345,7 +2345,7 @@ const REPERTOIRE_SEED = [
       'Black develops and offers a trade of the dark bishops, which would relieve some of the pressure.',
       'A near-automatic setup. Whatever Black does, White aims for the same pieces on the same squares, then castles. That predictability is the point: you spend your thinking time on the middlegame instead of the opening.'
     ] },
-  { id: 'catalanOpening', eco: 'E00', nameEn: 'Catalan Opening',
+  { id: 'catalanOpening', eco: 'E01', nameEn: 'Catalan Opening',
     movesSan: ['d4','Nf6','c4','e6','g3','d5','Bg2'], sideToMove: 'white',
     trapField: '', planField: '', sourceField: OPENING_SRC, verified: false, tag: 'core-repertoire',
     idea: 'Fianchettoes to pressure d5 and Black’s queenside along the long diagonal; strategically rich for White, but Black can hold by returning the c4 pawn at the right moment.' },
@@ -2424,7 +2424,7 @@ const REPERTOIRE_SEED = [
     movesSan: ['e4','c5','c3'], sideToMove: 'black',
     trapField: '', planField: '', sourceField: OPENING_SRC, verified: false, tag: 'core-repertoire',
     idea: 'Prepares d4 with a big pawn centre instead of the Open Sicilian; easy to learn and solid, though 2...d5 and 2...Nf6 give Black comfortable, well-charted answers.' },
-  { id: 'sicilianClosed', eco: 'B25', nameEn: 'Sicilian, Closed',
+  { id: 'sicilianClosed', eco: 'B24', nameEn: 'Sicilian, Closed',
     movesSan: ['e4','c5','Nc3','Nc6','g3'], sideToMove: 'black',
     trapField: '', planField: '', sourceField: OPENING_SRC, verified: false, tag: 'core-repertoire',
     idea: 'Skips the centre trade entirely: fianchetto, f4, and attack on the kingside; almost no theory, but Black gets a free hand on the queenside.' },
@@ -2437,7 +2437,7 @@ const REPERTOIRE_SEED = [
     movesSan: ['e4','c5','Nf3','Nc6','d4','cxd4','Nxd4','Nf6','Nc3','e5'], sideToMove: 'white',
     trapField: '', planField: '', sourceField: OPENING_SRC, verified: false, tag: 'outside-repertoire',
     idea: 'Black accepts a hole on d5 for piece activity and the bishop pair; deeply analysed and fully sound, but the structural concession is permanent.' },
-  { id: 'sicilianAccelDragon', eco: 'B34', nameEn: 'Sicilian, Accelerated Dragon',
+  { id: 'sicilianAccelDragon', eco: 'B32', nameEn: 'Sicilian, Accelerated Dragon',
     movesSan: ['e4','c5','Nf3','Nc6','d4','cxd4','Nxd4','g6'], sideToMove: 'white',
     trapField: '', planField: '', sourceField: OPENING_SRC, verified: false, tag: 'outside-repertoire',
     idea: 'Fianchettoes a move earlier to aim for ...d5 in one go; smoother than the Dragon, but it walks into the Maroczy Bind with c4.' },
@@ -2469,7 +2469,7 @@ const REPERTOIRE_SEED = [
     movesSan: ['d4','Nf6','c4','e6','Nc3','Bb4'], sideToMove: 'black',
     trapField: '', planField: '', sourceField: OPENING_SRC, verified: false, tag: 'outside-repertoire',
     idea: 'Black pins the c3 knight to fight for e4 and often doubles White’s pawns; one of the soundest defences to 1.d4, though it can concede the bishop pair.' },
-  { id: 'englishOpening', eco: 'A20', nameEn: 'English Opening',
+  { id: 'englishOpening', eco: 'A22', nameEn: 'English Opening',
     movesSan: ['c4','e5','Nc3','Nf6'], sideToMove: 'white',
     trapField: '', planField: '', sourceField: OPENING_SRC, verified: false, tag: 'outside-repertoire',
     idea: 'A flexible reversed-Sicilian setup where White plays on the flanks; low-risk and rich in transpositions, but rarely forces an early advantage.' },
@@ -5709,6 +5709,49 @@ test('library v2: expanded book validates, is tagged, and carries ideas', functi
   const ids = ops.map(function(e){ return e.id; });
   for (const need of ['kidMainline','kidClassical','ruyLopez','queensGambitDeclined'])
     ok(ids.indexOf(need) >= 0, 'library includes ' + need);
+});
+/* Authored lines against the pinned Lichess catalogue. Every repertoire line and
+   lesson must be a catalogue line move for move, or continue exactly the catalogue
+   line listed here ([plies, name]). Moves past that line are the only ones the
+   catalogue cannot vouch for, so this table is the human source-check list.
+   Changing an authored line's moves, or the catalogue revision, forces the table
+   to be revisited. This checks moves and ECO codes only; it never sets verified. */
+test('authored lines follow the pinned catalogue; ECO codes and tails match it', function(){
+  const extendsLine = {
+    petroffDefence: [9, "Petrov's Defense: Classical Attack"],
+    londonSystem: [5, "Queen's Pawn Game: London System"],
+    kidMainline: [9, "King's Indian Defense: Normal Variation, Rare Defenses"],
+    kidClassical: [14, "King's Indian Defense: Orthodox Variation, Aronin-Taimanov Defense"],
+    kidSamisch: [10, "King's Indian Defense: Sämisch Variation, Normal Defense"],
+    kidFianchetto: [5, "King's Indian Defense: Fianchetto Variation, Immediate Fianchetto"],
+    sicilianOpen: [8, "Sicilian Defense: Modern Variations, Main Line"],
+    sicilianScheveningen: [8, "Sicilian Defense: Modern Variations, Main Line"],
+    caroKann: [6, "Caro-Kann Defense"],
+    englishSymmetrical: [5, "English Opening: Symmetrical Variation, Two Knights, Fianchetto Variation"],
+    'learn-bishops': [4, "Bishop's Opening: Berlin Defense"],
+    'learn-sicilian': [8, "Sicilian Defense: Modern Variations, Main Line"],
+    'learn-bogo': [6, "Bogo-Indian Defense"],
+    'learn-kings-indian': [9, "King's Indian Defense: Normal Variation, Rare Defenses"],
+    'learn-grunfeld': [8, "Grünfeld Defense: Exchange Variation"],
+    'learn-benoni': [6, "Benoni Defense: Modern Variation"],
+    'learn-english': [5, "English Opening: Symmetrical Variation, Two Knights, Fianchetto Variation"]
+  };
+  const byMoves = new Map();
+  for (const o of BUNDLED_OPENING_PACK.openings) byMoves.set(o.movesSan.join(' '), o);
+  const authored = REPERTOIRE_SEED.concat(OPENING_LESSONS);
+  eq(authored.length, 74, '40 repertoire lines and 34 lessons');
+  let tails = 0;
+  for (const e of authored){
+    let depth = e.movesSan.length;
+    while (depth > 0 && !byMoves.has(e.movesSan.slice(0, depth).join(' '))) depth--;
+    const deepest = byMoves.get(e.movesSan.slice(0, depth).join(' '));
+    const found = depth + ' ' + (deepest ? deepest.nameEn : '(none)');
+    const listed = extendsLine[e.id];
+    if (listed){ tails++; eq(found, listed[0] + ' ' + listed[1], e.id + ' continues its catalogue line'); }
+    else eq(depth, e.movesSan.length, e.id + ' is a catalogue line move for move (deepest match: ' + found + ')');
+    if (depth === e.movesSan.length && e.eco) eq(e.eco, deepest.eco, e.id + ' ECO matches the catalogue');
+  }
+  eq(tails, Object.keys(extendsLine).length, 'every listed line belongs to an authored entry');
 });
 test('starter openings teach move by move and stay in step with their moves', function(){
   const starters = CT.library.openings.filter(function(e){ return e.starter; });

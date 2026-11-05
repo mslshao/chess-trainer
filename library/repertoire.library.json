@@ -3,7 +3,7 @@
   "openings": [
     {
       "id": "ruyLopez",
-      "eco": "C88",
+      "eco": "C90",
       "nameEn": "Ruy Lopez, Closed",
       "movesSan": [
         "e4",
@@ -42,7 +42,7 @@
     },
     {
       "id": "italianGiuoco",
-      "eco": "C50",
+      "eco": "C54",
       "nameEn": "Italian Game, Giuoco Pianissimo",
       "movesSan": [
         "e4",
@@ -198,7 +198,7 @@
     },
     {
       "id": "queensGambitDeclined",
-      "eco": "D37",
+      "eco": "D53",
       "nameEn": "Queen's Gambit Declined",
       "movesSan": [
         "d4",
@@ -320,7 +320,7 @@
     },
     {
       "id": "catalanOpening",
-      "eco": "E00",
+      "eco": "E01",
       "nameEn": "Catalan Opening",
       "movesSan": [
         "d4",
@@ -652,7 +652,7 @@
     },
     {
       "id": "sicilianClosed",
-      "eco": "B25",
+      "eco": "B24",
       "nameEn": "Sicilian, Closed",
       "movesSan": [
         "e4",
@@ -714,7 +714,7 @@
     },
     {
       "id": "sicilianAccelDragon",
-      "eco": "B34",
+      "eco": "B32",
       "nameEn": "Sicilian, Accelerated Dragon",
       "movesSan": [
         "e4",
@@ -888,7 +888,7 @@
     },
     {
       "id": "englishOpening",
-      "eco": "A20",
+      "eco": "A22",
       "nameEn": "English Opening",
       "movesSan": [
         "c4",
