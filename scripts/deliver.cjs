@@ -81,14 +81,19 @@ function validRemote(url) {
   return /^(?:https:\/\/github\.com\/|git@github\.com:|ssh:\/\/git@github\.com\/)mslshao\/chess-trainer(?:\.git)?\/?$/.test(url);
 }
 
-async function github(resource) {
+async function github(resource, deps={}) {
   const headers={Accept:'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28','User-Agent':'chess-trainer-delivery'};
-  const token=process.env.GH_TOKEN||process.env.GITHUB_TOKEN;
+  const env=deps.env||process.env;
+  const token=env.GH_TOKEN||env.GITHUB_TOKEN;
   if(token) headers.Authorization='Bearer '+token;
-  const response=await fetch('https://api.github.com/repos/'+CONFIG.repository+'/'+resource,
+  const response=await (deps.fetch||fetch)('https://api.github.com/repos/'+CONFIG.repository+'/'+resource,
     {headers,signal:AbortSignal.timeout(CONFIG.apiTimeoutMs)});
   if(!response.ok) throw Error('GitHub check lookup failed (HTTP '+response.status+'). For a private repository, set GH_TOKEN or GITHUB_TOKEN with Actions read access.');
   return response.json();
+}
+async function probeGitHubAccess(get=github) {
+  const result=await get('actions/workflows/'+CONFIG.workflow+'/runs?per_page=1');
+  if(!Array.isArray(result.workflow_runs)) throw Error('GitHub workflow lookup returned an invalid response.');
 }
 async function waitForCI(sha, git, deps={}) {
   const get=deps.get||github, now=deps.now||Date.now;
@@ -178,6 +183,7 @@ function installFiles(items, backupDirectory, io=fs) {
 
 async function deliveryFlow(ops,checkOnly=false) {
   const sha=await ops.preflight();
+  if(!checkOnly) await ops.apiAccess();
   await ops.checks();
   await ops.unchanged(sha);
   if(checkOnly) return {sha,checkOnly:true};
@@ -220,6 +226,10 @@ async function main(args=process.argv.slice(2)) {
         console.log('Checking committed main '+sha.slice(0,7)+'. Destination: '+cfg.destinationHtml);
         return sha;
       },
+      async apiAccess() {
+        await probeGitHubAccess();
+        console.log('GitHub workflow access confirmed.');
+      },
       checks() {for(const [exe,args] of CHECKS){console.log('\nChecking: '+exe+' '+args.join(' '));command(root,env,exe,args);}},
       unchanged:sha=>assertRevision(git,sha),
       push:sha=>command(root,env,'git',['push',CONFIG.remote,sha+':refs/heads/'+CONFIG.branch]),
@@ -235,5 +245,5 @@ async function main(args=process.argv.slice(2)) {
     return result;
   } finally {fs.closeSync(lockFd);fs.unlinkSync(lock);}
 }
-module.exports={CONFIG,CI_PATHS,CHECKS,options,loadConfig,assertRevision,verifyRemote,validRemote,waitForCI,installFiles,deliveryFlow,hash};
+module.exports={CONFIG,CI_PATHS,CHECKS,options,loadConfig,assertRevision,verifyRemote,validRemote,github,probeGitHubAccess,waitForCI,installFiles,deliveryFlow,hash};
 if(require.main===module) main().catch(error=>{console.error('\nDelivery stopped: '+error.message);process.exitCode=1;});

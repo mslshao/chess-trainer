@@ -4,9 +4,9 @@ const assert=require('node:assert/strict');
 const fs=require('node:fs');
 const os=require('node:os');
 const path=require('node:path');
-const {CONFIG,CHECKS,options,loadConfig,assertRevision,verifyRemote,validRemote,waitForCI,installFiles,deliveryFlow}=require('../scripts/deliver.cjs');
+const {CONFIG,CHECKS,options,loadConfig,assertRevision,verifyRemote,validRemote,github,probeGitHubAccess,waitForCI,installFiles,deliveryFlow}=require('../scripts/deliver.cjs');
 
-const sequence=['preflight','checks','unchanged','push','remote','ci','unchanged','remote','install'];
+const sequence=['preflight','apiAccess','checks','unchanged','push','remote','ci','unchanged','remote','install'];
 function fakeFlow(failAt=-1) {
   const trace=[];
   const ops={};
@@ -30,13 +30,13 @@ for(let stage=0;stage<sequence.length;stage++) test('stops after failure at stag
 test('check-only never pushes, queries CI or copies',async()=>{
   const {ops,trace}=fakeFlow();
   assert.deepEqual(await deliveryFlow(ops,true),{sha:'abc',checkOnly:true});
-  assert.deepEqual(trace,sequence.slice(0,3));
+  assert.deepEqual(trace,['preflight','checks','unchanged']);
 });
 for(const [exe,args] of CHECKS) test('a failed check stops delivery: '+exe+' '+args.join(' '),async()=>{
   const {ops,trace}=fakeFlow();
   ops.checks=async()=>{for(const check of CHECKS) if(check[0]===exe&&check[1]===args) throw Error('check failed');};
   await assert.rejects(deliveryFlow(ops),/check failed/);
-  assert.deepEqual(trace,['preflight']);
+  assert.deepEqual(trace,['preflight','apiAccess']);
 });
 
 function fixture(t) {
@@ -148,4 +148,45 @@ test('documentation-only commits can reuse CI only for identical inputs on an an
   assert.equal((await waitForCI('abc',args=>calls.push(args),deps)).head_sha,'prior');
   assert.equal(calls[0][0],'merge-base');assert.equal(calls[1][0],'diff');
   await assert.rejects(waitForCI('abc',()=>{throw Error('changed inputs');},deps),/Timed out/);
+});
+
+for(const [label,env,authorization] of [
+  ['public access',{},undefined],
+  ['GH_TOKEN',{GH_TOKEN:'example-token'},'Bearer example-token'],
+  ['GITHUB_TOKEN',{GITHUB_TOKEN:'example-token'},'Bearer example-token']
+]) test('access preflight makes one workflow-runs request using '+label,async()=>{
+  const requests=[];
+  const get=resource=>github(resource,{env,fetch:async(url,opts)=>{
+    requests.push({url,opts});
+    return {ok:true,json:async()=>({workflow_runs:[]})};
+  }});
+  await probeGitHubAccess(get);
+  assert.equal(requests.length,1);
+  assert.equal(requests[0].url,'https://api.github.com/repos/'+CONFIG.repository+'/actions/workflows/tests.yml/runs?per_page=1');
+  assert.equal(requests[0].opts.headers.Authorization,authorization);
+});
+for(const status of [401,403,404]) test('access preflight HTTP '+status+' stops before checks, push or copy',async()=>{
+  const {ops,trace}=fakeFlow();
+  let calls=0;
+  ops.apiAccess=async()=>{
+    trace.push('apiAccess');
+    await probeGitHubAccess(resource=>github(resource,{env:{},fetch:async()=>{
+      calls++;return {ok:false,status};
+    }}));
+  };
+  await assert.rejects(deliveryFlow(ops),e=>e.message.includes('HTTP '+status)&&e.message.includes('Actions read access'));
+  assert.equal(calls,1);
+  assert.deepEqual(trace,['preflight','apiAccess']);
+});
+test('access preflight rejects an unexpected API response',async()=>{
+  await assert.rejects(probeGitHubAccess(async()=>({message:'not a run listing'})),/invalid response/);
+});
+test('access preflight rejects a network failure before checks or push',async()=>{
+  const {ops,trace}=fakeFlow();
+  ops.apiAccess=async()=>{
+    trace.push('apiAccess');
+    await probeGitHubAccess(resource=>github(resource,{env:{},fetch:async()=>{throw Error('network unavailable');}}));
+  };
+  await assert.rejects(deliveryFlow(ops),/network unavailable/);
+  assert.deepEqual(trace,['preflight','apiAccess']);
 });

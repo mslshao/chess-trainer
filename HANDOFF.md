@@ -28,45 +28,46 @@ use and existing browser storage. Complete this workflow for future changes:
    maintained sources of generated blocks. The old OneDrive source folders are
    historical copies, not build inputs for future work.
 2. Rebuild affected generated content and refresh `library/` as described below.
-   For trainer code or content changes, run `node tests/run-node.cjs` and both
-   browser harnesses from the clone, following `tests/browser/README.md`. The
-   catalogue harness runs the full Edge suite; run the original-position harness
-   with `--ui-only` to avoid duplicating that suite. Require no failures or skips,
-   no browser errors, and only `file:` and `blob:` requests. Report actual counts;
-   never weaken tests to obtain a pass. For documentation-only changes, review
-   the diff and run `git diff --check`; the unchanged trainer need not be retested.
-3. Update this handoff as needed, commit in logical pieces and push to `main`.
-   Confirm the push succeeded and any triggered CI checks passed before copying
-   a changed trainer to Michael's original location. A failed test or push leaves
-   the last delivered trainer in place while the problem is resolved.
-4. Copy the tested, committed and pushed `chess-trainer.html` from the clone over
-   the original file above. Keep a backup of the previous delivered file outside
-   Git before replacing it, and verify the two files have identical SHA-256 hashes.
-   If they already match, no overwrite is needed. Keep the original path intact;
-   do not clear or replace browser save data. Refresh the local handoff from this
-   repository handoff after a successful push so either entry point gives the
-   same instructions. Results, screenshots and backups stay local and ignored.
-5. Report the pushed commit, verification results and successful copy back. If
-   the machine or original path is unavailable, explicitly report delivery as
-   pending; a repository push alone does not finish the local delivery step.
+   Review the diff, run `git diff --check`, update this handoff as needed and
+   commit the intended changes in logical pieces. The delivery script requires
+   a clean, committed checkout; it does not create commits.
+3. Automatically finish every change by running `node scripts/deliver.cjs` from
+   the clone after committing, including documentation-only changes. Michael has
+   given standing authorization for this normal completion step. Do not wait for
+   him to request it again, ask whether to run it, or leave it as a suggested next
+   step. Follow a later explicit request to stop, defer delivery or use a different
+   workflow if one is given.
+4. Let the script perform the checks, push and local delivery. It first verifies
+   GitHub workflow API access, then runs the offline rebuild, library export,
+   delivery regression tests, full Node suite and both Edge harnesses. It pushes
+   the checked commit, waits for GitHub Tests, backs up and updates the original
+   trainer and handoff, and verifies their SHA-256 hashes. Do not bypass a failed
+   check with a manual push or copy. Resolve failures within the task, commit any
+   fixes and rerun the script; never weaken tests to obtain a pass.
+5. Report the pushed commit, actual check results and successful delivery. Work
+   is complete only after the script succeeds and the original files match. If
+   delivery requires unavailable access, user input or this Windows machine,
+   explain the blocker and explicitly mark local delivery as pending. A commit,
+   push or `--check-only` run alone does not finish the task.
 
-This is the standing delivery workflow requested by Michael. Future work should
-finish with his usual original file updated, while all development stays in Git.
+This is the default completion workflow for future work. All development stays
+in Git, and Michael continues using his original file without requesting a
+separate release or copy-back step each time.
 
 ## Automated delivery
 
-The standing workflow above is automated. After committing changes on main, run
-`node scripts/deliver.cjs` from the clone. It runs the offline rebuild, library
-export, delivery regression tests, full Node suite and both Edge harnesses, then
-pushes the checked commit, waits for successful GitHub Tests, and updates the
-original trainer and local handoff with backups and SHA-256 verification.
-
+Run `node scripts/deliver.cjs` automatically after committing, as required above.
 The ignored `.delivery.local.json` contains this machine's destination, backup
 and Playwright module paths. See `scripts/README.md` for setup and failure
-handling. `--check-only` runs local checks without pushing or copying. No option
-skips checks for a delivery. The script refuses dirty worktrees and does not make
-commits. If a replacement fails, it restores earlier replacements from backups;
-if Windows also blocks recovery, it reports the retained backup location.
+handling. `--check-only` is for diagnostics, not the final delivery step.
+
+The initial workflow-runs API request catches missing or rejected API access
+before the test suite or push. Public repositories can use anonymous API access;
+private repositories need GH_TOKEN or GITHUB_TOKEN with Actions read access.
+The script leaves matching files alone, preserves browser save data and keeps
+backups outside Git. If replacement fails, it restores earlier replacements from
+backups; if Windows also blocks recovery, it reports the backup location. Never
+claim successful local delivery after a failed script run.
 
 ## Repository layout
 

@@ -1,12 +1,16 @@
 # Check, push and deliver
 
-After committing your changes on main, run from the repository root:
+Future changes automatically finish by running this command after committing
+on main. This is the standing completion workflow in HANDOFF.md; Michael does
+not need to ask for it each time. Run from the repository root:
 
 ```powershell
 node scripts/deliver.cjs
 ```
 
-The command checks the offline rebuild, library export, delivery regression tests,
+Before running tests or pushing, the command makes one workflow-runs API request
+to confirm GitHub access. Missing or rejected access stops the run immediately.
+It then checks the offline rebuild, library export, delivery regression tests,
 full Node suite and both Edge harnesses. It then pushes the checked commit to
 origin/main without force, waits for GitHub's Tests workflow, and updates the
 original trainer and its neighbouring handoff. Every command must succeed.
@@ -46,7 +50,9 @@ explicitly uses the msedge channel; it never substitutes another browser.
 Git authentication uses your existing Git setup. GitHub check lookups use the
 public API, or GH_TOKEN/GITHUB_TOKEN from the environment when set. A private
 repository needs a token with Actions read access for those lookups. Never put
-tokens in the local JSON, code or command arguments. API failures block delivery.
+tokens in the local JSON, code or command arguments. The initial API request
+checks these permissions before tests and push; later API failures also block
+delivery. Public repositories do not require a token for anonymous API access.
 
 GitHub is polled for up to five minutes. Failed, cancelled or missing required
 runs stop delivery; rerun after resolving the cause. Documentation-only commits
@@ -62,8 +68,9 @@ node scripts/deliver.cjs --config C:/path/to/settings.json
 node --test tests/delivery.test.cjs
 ```
 
-`--check-only` runs the same local checks without pushing or copying. It still
-requires committed changes. Paths resolve from the repository, so the script can
+`--check-only` runs the same local checks without the GitHub API probe, pushing
+or copying. It still requires committed changes and is not a completed delivery.
+Paths resolve from the repository, so the script can
 also be invoked by its absolute path from another folder.
 
 A lock in the ignored `tests/artifacts/delivery.lock` prevents simultaneous runs.
