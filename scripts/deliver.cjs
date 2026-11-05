@@ -86,8 +86,15 @@ async function github(resource, deps={}) {
   const env=deps.env||process.env;
   const token=env.GH_TOKEN||env.GITHUB_TOKEN;
   if(token) headers.Authorization='Bearer '+token;
-  const response=await (deps.fetch||fetch)('https://api.github.com/repos/'+CONFIG.repository+'/'+resource,
-    {headers,signal:AbortSignal.timeout(CONFIG.apiTimeoutMs)});
+  let response;
+  try {
+    response=await (deps.fetch||fetch)('https://api.github.com/repos/'+CONFIG.repository+'/'+resource,
+      {headers,signal:AbortSignal.timeout(CONFIG.apiTimeoutMs)});
+  } catch(error) {
+    const code=error.cause?.code||error.code;
+    const detail=typeof code==='string'&&/^[A-Z0-9_]+$/.test(code)?' ('+code+')':'';
+    throw Error('GitHub API network request failed'+detail+'. No GitHub result was accepted.',{cause:error});
+  }
   if(!response.ok) throw Error('GitHub check lookup failed (HTTP '+response.status+'). For a private repository, set GH_TOKEN or GITHUB_TOKEN with Actions read access.');
   return response.json();
 }
@@ -183,10 +190,10 @@ function installFiles(items, backupDirectory, io=fs) {
 
 async function deliveryFlow(ops,checkOnly=false) {
   const sha=await ops.preflight();
-  if(!checkOnly) await ops.apiAccess();
   await ops.checks();
   await ops.unchanged(sha);
   if(checkOnly) return {sha,checkOnly:true};
+  await ops.auth();
   await ops.push(sha);
   await ops.remote(sha);
   await ops.ci(sha);
@@ -226,7 +233,7 @@ async function main(args=process.argv.slice(2)) {
         console.log('Checking committed main '+sha.slice(0,7)+'. Destination: '+cfg.destinationHtml);
         return sha;
       },
-      async apiAccess() {
+      async auth() {
         await probeGitHubAccess();
         console.log('GitHub workflow access confirmed.');
       },

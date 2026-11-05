@@ -8,10 +8,11 @@ not need to ask for it each time. Run from the repository root:
 node scripts/deliver.cjs
 ```
 
-Before running tests or pushing, the command makes one workflow-runs API request
-to confirm GitHub access. Missing or rejected access stops the run immediately.
-It then checks the offline rebuild, library export, delivery regression tests,
-full Node suite and both Edge harnesses. It then pushes the checked commit to
+The command checks the offline rebuild, library export, delivery regression tests,
+full Node suite and both Edge harnesses. After the check-only return and immediately
+before pushing, ops.auth() makes one read-only workflow-runs API request to confirm
+GitHub access. Missing or rejected access stops the run without pushing or copying.
+A successful check allows it to push the checked commit to
 origin/main without force, waits for GitHub's Tests workflow, and updates the
 original trainer and its neighbouring handoff. Every command must succeed.
 Uncommitted changes, a stale branch, changed generated files, failed tests, a
@@ -51,8 +52,23 @@ Git authentication uses your existing Git setup. GitHub check lookups use the
 public API, or GH_TOKEN/GITHUB_TOKEN from the environment when set. A private
 repository needs a token with Actions read access for those lookups. Never put
 tokens in the local JSON, code or command arguments. The initial API request
-checks these permissions before tests and push; later API failures also block
+checks these permissions immediately before push; later API failures also block
 delivery. Public repositories do not require a token for anonymous API access.
+
+If the gh CLI is installed and signed in, set the token only for the current
+PowerShell session before delivery:
+
+```powershell
+$env:GH_TOKEN = gh auth token
+node scripts/deliver.cjs
+```
+
+On this Windows machine, gh is not installed; the existing Git Credential Manager
+login can supply the session token through Git's normal credential-helper interface.
+Capture its output in memory, never print it, and pass the password field only as
+GH_TOKEN in the delivery process environment. Do not persist the credential.
+Transport errors include their error code when available; they still stop delivery.
+No authentication or network failure is treated as a successful check.
 
 GitHub is polled for up to five minutes. Failed, cancelled or missing required
 runs stop delivery; rerun after resolving the cause. Documentation-only commits

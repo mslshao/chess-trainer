@@ -6,7 +6,7 @@ const os=require('node:os');
 const path=require('node:path');
 const {CONFIG,CHECKS,options,loadConfig,assertRevision,verifyRemote,validRemote,github,probeGitHubAccess,waitForCI,installFiles,deliveryFlow}=require('../scripts/deliver.cjs');
 
-const sequence=['preflight','apiAccess','checks','unchanged','push','remote','ci','unchanged','remote','install'];
+const sequence=['preflight','checks','unchanged','auth','push','remote','ci','unchanged','remote','install'];
 function fakeFlow(failAt=-1) {
   const trace=[];
   const ops={};
@@ -30,13 +30,13 @@ for(let stage=0;stage<sequence.length;stage++) test('stops after failure at stag
 test('check-only never pushes, queries CI or copies',async()=>{
   const {ops,trace}=fakeFlow();
   assert.deepEqual(await deliveryFlow(ops,true),{sha:'abc',checkOnly:true});
-  assert.deepEqual(trace,['preflight','checks','unchanged']);
+  assert.deepEqual(trace,sequence.slice(0,3));
 });
 for(const [exe,args] of CHECKS) test('a failed check stops delivery: '+exe+' '+args.join(' '),async()=>{
   const {ops,trace}=fakeFlow();
   ops.checks=async()=>{for(const check of CHECKS) if(check[0]===exe&&check[1]===args) throw Error('check failed');};
   await assert.rejects(deliveryFlow(ops),/check failed/);
-  assert.deepEqual(trace,['preflight','apiAccess']);
+  assert.deepEqual(trace,['preflight']);
 });
 
 function fixture(t) {
@@ -165,28 +165,34 @@ for(const [label,env,authorization] of [
   assert.equal(requests[0].url,'https://api.github.com/repos/'+CONFIG.repository+'/actions/workflows/tests.yml/runs?per_page=1');
   assert.equal(requests[0].opts.headers.Authorization,authorization);
 });
-for(const status of [401,403,404]) test('access preflight HTTP '+status+' stops before checks, push or copy',async()=>{
+for(const status of [401,403,404]) test('access preflight HTTP '+status+' stops before push or copy',async()=>{
   const {ops,trace}=fakeFlow();
   let calls=0;
-  ops.apiAccess=async()=>{
-    trace.push('apiAccess');
+  ops.auth=async()=>{
+    trace.push('auth');
     await probeGitHubAccess(resource=>github(resource,{env:{},fetch:async()=>{
       calls++;return {ok:false,status};
     }}));
   };
   await assert.rejects(deliveryFlow(ops),e=>e.message.includes('HTTP '+status)&&e.message.includes('Actions read access'));
   assert.equal(calls,1);
-  assert.deepEqual(trace,['preflight','apiAccess']);
+  assert.deepEqual(trace,['preflight','checks','unchanged','auth']);
 });
 test('access preflight rejects an unexpected API response',async()=>{
   await assert.rejects(probeGitHubAccess(async()=>({message:'not a run listing'})),/invalid response/);
 });
-test('access preflight rejects a network failure before checks or push',async()=>{
+test('access preflight rejects a network failure before push',async()=>{
   const {ops,trace}=fakeFlow();
-  ops.apiAccess=async()=>{
-    trace.push('apiAccess');
+  ops.auth=async()=>{
+    trace.push('auth');
     await probeGitHubAccess(resource=>github(resource,{env:{},fetch:async()=>{throw Error('network unavailable');}}));
   };
-  await assert.rejects(deliveryFlow(ops),/network unavailable/);
-  assert.deepEqual(trace,['preflight','apiAccess']);
+  await assert.rejects(deliveryFlow(ops),/GitHub API network request failed/);
+  assert.deepEqual(trace,['preflight','checks','unchanged','auth']);
+});
+
+test('network diagnostics include a safe error code without exposing token data',async()=>{
+  await assert.rejects(github('actions/workflows/tests.yml',{env:{GH_TOKEN:'example-secret'},fetch:async()=>{
+    throw Error('example-secret',{cause:{code:'ECONNRESET'}});
+  }}),error=>error.message.includes('ECONNRESET')&&!error.message.includes('example-secret'));
 });

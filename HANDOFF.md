@@ -37,9 +37,10 @@ use and existing browser storage. Complete this workflow for future changes:
    him to request it again, ask whether to run it, or leave it as a suggested next
    step. Follow a later explicit request to stop, defer delivery or use a different
    workflow if one is given.
-4. Let the script perform the checks, push and local delivery. It first verifies
-   GitHub workflow API access, then runs the offline rebuild, library export,
-   delivery regression tests, full Node suite and both Edge harnesses. It pushes
+4. Let the script perform the checks, push and local delivery. It runs the offline
+   rebuild, library export, delivery regression tests, full Node suite and both
+   Edge harnesses. After the check-only return, ops.auth() verifies GitHub workflow
+   API access with one read-only request immediately before pushing. It pushes
    the checked commit, waits for GitHub Tests, backs up and updates the original
    trainer and handoff, and verifies their SHA-256 hashes. Do not bypass a failed
    check with a manual push or copy. Resolve failures within the task, commit any
@@ -61,9 +62,12 @@ The ignored `.delivery.local.json` contains this machine's destination, backup
 and Playwright module paths. See `scripts/README.md` for setup and failure
 handling. `--check-only` is for diagnostics, not the final delivery step.
 
-The initial workflow-runs API request catches missing or rejected API access
-before the test suite or push. Public repositories can use anonymous API access;
+The workflow-runs API request catches missing or rejected API access immediately
+before push. The check-only path makes no GitHub API calls. Public repositories can use anonymous API access;
 private repositories need GH_TOKEN or GITHUB_TOKEN with Actions read access.
+If gh is signed in, set the session token with `$env:GH_TOKEN = gh auth token`.
+This machine can use its existing Git Credential Manager login instead; keep the
+token in process memory only. See `scripts/README.md`.
 The script leaves matching files alone, preserves browser save data and keeps
 backups outside Git. If replacement fails, it restores earlier replacements from
 backups; if Windows also blocks recovery, it reports the backup location. Never
