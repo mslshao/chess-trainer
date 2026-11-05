@@ -1,6 +1,6 @@
 # Chess Trainer: handoff
 
-Current state as of 2026-11-04 (America/Los_Angeles). `docs/HISTORY.md` has the earlier session log and
+Current state as of 2026-11-05 (America/Los_Angeles). `docs/HISTORY.md` has the earlier session log and
 the reasoning behind past decisions; where the two differ, this file wins.
 
 ## What it is
@@ -72,6 +72,72 @@ The script leaves matching files alone, preserves browser save data and keeps
 backups outside Git. If replacement fails, it restores earlier replacements from
 backups; if Windows also blocks recovery, it reports the backup location. Never
 claim successful local delivery after a failed script run.
+
+## Delivery record, 2026-11-05
+
+The authenticated delivery and a separate save-protection fix both completed
+through the normal script, with no skipped checks or manual copy-back.
+
+### Authentication hardening
+
+- Commit: fa49b91639754dfb311e7f0535d58579b38a6f0c.
+- Exact-commit CI success:
+  https://github.com/mslshao/chess-trainer/actions/runs/42121896486
+- Local checks: 49/49 delivery tests, 193/193 Node, 194/194 Edge, both Edge
+  harnesses passed. Edge 156.0.4314.50; no browser errors; file: and blob: only.
+- The script checked GitHub workflow access immediately before pushing. This
+  machine used the existing Git Credential Manager login through GH_TOKEN held
+  only in process memory. No token was printed or stored in a file or argument.
+- The delivered HTML already matched the checked source, so this run updated
+  only the handoff. Get-FileHash confirmed the original trainer's SHA-256:
+  2003682b00a0c5e3d9cd055016f92b864dca6616f58a0d6f95db183c12859040
+- Handoff backup:
+  C:\Users\Michael\OneDrive\Documents\ChatGPT\Usage\chess-trainer-checks\delivery-backups\chess-trainer-handoff.md.1793917791357-e8b4dfaf-42ee-4fbf-9978-34fdcb1677a1.bak
+- Complete local output: tests/artifacts/delivery-auth-run.log (ignored).
+
+### Tests page save protection
+
+- Commit: 56e1f3fa9d087750d779616d0dc002c3ac0fa24d.
+- Exact-commit CI success:
+  https://github.com/mslshao/chess-trainer/actions/runs/42124112087
+- An isolated reproduction showed that the built-in storage reset test deleted
+  the normal save while reporting 194/194 passes. This defect existed in the
+  initial repository commit. The runner now uses a unique temporary storage key
+  and cleans it up in finally, preserving the normal save key and format.
+- The catalogue harness now answers 34 drills through the UI, checks their
+  Progress totals after reload, runs the full Tests page, verifies that the
+  saved data is byte-for-byte unchanged and rechecks the 34 cards/34 attempts.
+  No existing embedded test was weakened or removed.
+- All local checks passed again: 49/49 delivery tests, 193/193 Node, 194/194
+  Edge and both browser harnesses. No browser errors or network requests.
+- The script replaced only the trainer because the handoff still matched.
+  Get-FileHash on the original path matched the checked repository:
+  7b58d9e90eb6bc6c525e59643fb75322fdcb7c0f50a89b438266b6eff089a75e
+  This new hash is due to the test-storage isolation change. Opening content
+  and verified flags were unchanged.
+- Trainer backup:
+  C:\Users\Michael\OneDrive\Documents\ChatGPT\Usage\chess-trainer-checks\delivery-backups\chess-trainer.html.1793918738668-92cebbc8-5616-45e1-b177-9fe4a3763ca2.bak
+- Complete local output: tests/artifacts/delivery-progress-run.log (ignored).
+
+### Original browser progress check
+
+The original file was opened in the user's normal Edge profile. Michael's
+Progress screenshot showed zero recorded games and zero drill attempts. He
+confirmed mainly exploring openings and playing unfinished games, and never
+using Tests. Those activities do not populate Progress, so this is consistent
+with the current behaviour and does not establish lost history. Unfinished
+standalone games are not restored by the save format.
+
+The Tests defect was separate from the reported empty panel. No user browser
+storage was cleared, replaced or imported during verification. The automated
+persistence checks used separate temporary profiles. There was no prior eligible
+progress baseline against which to prove preservation of historical user data.
+
+This handoff-only update is to be committed and delivered through the same
+script. Its CI inputs match 56e1f3f, so the script must reuse the successful run
+above, update only the handoff and leave the trainer's hash, modification time
+and trainer-backup list unchanged. Record the actual result in the session
+report; do not treat this planned outcome as already verified.
 
 ## Repository layout
 
@@ -165,7 +231,8 @@ their remaining moves are the only ones no catalogue line covers:
 - 2026-11-05 cloud session, after the test above gained the leaves-catalogue
   check: rebuild unchanged, Node 193/193, and both browser harnesses passed in
   headless Chromium 153 (`CHESS_BROWSER_CHANNEL=chromium`), suite 194/194. Edge
-  was not rerun for this test-only change.
+  was not rerun in that cloud session; the Windows deliveries recorded above
+  have since passed both Edge harnesses with the changed catalogue test.
 - Edge 156.0.4314.50, headless at file:// from the Windows clone on 2026-11-04
   (America/Los_Angeles): 194/194, zero failures or skips. Zero page or console
   errors; requests used only file: and blob:. Networking was disabled and the
