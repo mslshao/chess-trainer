@@ -127,14 +127,24 @@ All present once each as of 2026-11-04 (America/Los_Angeles).
 itself.
 
 The test "authored lines follow the pinned catalogue" checks the 74 authored lines
-(repertoire plus lessons) against the catalogue. 57 are Lichess lines move for
-move and must carry the Lichess ECO code. The other 17 continue a named Lichess
-line and are listed in the test with that line's ply count and name; only their
-extra moves are unchecked. That table, plus all annotation prose, is the human
-source-check list.
+(repertoire plus lessons) against the catalogue. 57 are named Lichess lines move
+for move and must carry the Lichess ECO code. The other 17 are pinned to the
+deepest named line they reach, by ply count and name, so a changed move is caught.
+71 of the 74 stay on some catalogue line for every move. Only three leave it, and
+their remaining moves are the only ones no catalogue line covers:
+
+| Entry | Leaves after ply | Moves to source-check |
+| --- | --- | --- |
+| `londonSystem` | 5 | e6 e3 Bd6 Bd3 |
+| `sicilianScheveningen` | 9 | e6 |
+| `caroKann` | 7 | Bf5 |
 
 ## Verification
 
+- 2026-11-05 cloud session, after the test above gained the leaves-catalogue
+  check: rebuild unchanged, Node 193/193, and both browser harnesses passed in
+  headless Chromium 153 (`CHESS_BROWSER_CHANNEL=chromium`), suite 194/194. Edge
+  was not rerun for this test-only change.
 - Edge 156.0.4314.50, headless at file:// from the Windows clone on 2026-11-04
   (America/Los_Angeles): 194/194, zero failures or skips. Zero page or console
   errors; requests used only file: and blob:. Networking was disabled and the
@@ -160,7 +170,7 @@ source-check list.
 ## Remaining work
 
 1. Human source check: annotation prose for all authored lines and traps, and the
-   moves past the catalogue for the 17 lines in the test table.
+   six moves in the three lines that leave the catalogue (table above).
 2. Firefox at `file://` has never been run. The expected outcome is the
    main-thread fallback badge, which is verified by simulation in Chromium.
 3. Optional, not started: drag-and-drop in the setup editor, and a "Save as

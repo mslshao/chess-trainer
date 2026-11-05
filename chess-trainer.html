@@ -5710,13 +5710,17 @@ test('library v2: expanded book validates, is tagged, and carries ideas', functi
   for (const need of ['kidMainline','kidClassical','ruyLopez','queensGambitDeclined'])
     ok(ids.indexOf(need) >= 0, 'library includes ' + need);
 });
-/* Authored lines against the pinned Lichess catalogue. Every repertoire line and
-   lesson must be a catalogue line move for move, or continue exactly the catalogue
-   line listed here ([plies, name]). Moves past that line are the only ones the
-   catalogue cannot vouch for, so this table is the human source-check list.
-   Changing an authored line's moves, or the catalogue revision, forces the table
-   to be revisited. This checks moves and ECO codes only; it never sets verified. */
+/* Authored lines against the pinned Lichess catalogue, checked two ways.
+   extendsLine pins the deepest named catalogue line each listed entry reaches
+   ([plies, name]), so a changed move is caught even when it lands on another
+   catalogue path; every unlisted entry must be a named line move for move, with
+   the same ECO code. leavesCatalogue lists the only entries whose moves leave every
+   catalogue line, and the ply they leave after; every other entry stays on some
+   catalogue line throughout. The moves past those plies are the human
+   source-check list. Changing an authored line's moves, or the catalogue revision,
+   forces both tables to be revisited. Moves and ECO codes only; never sets verified. */
 test('authored lines follow the pinned catalogue; ECO codes and tails match it', function(){
+  const leavesCatalogue = { londonSystem: 5, sicilianScheveningen: 9, caroKann: 7 };
   const extendsLine = {
     petroffDefence: [9, "Petrov's Defense: Classical Attack"],
     londonSystem: [5, "Queen's Pawn Game: London System"],
@@ -5736,11 +5740,14 @@ test('authored lines follow the pinned catalogue; ECO codes and tails match it',
     'learn-benoni': [6, "Benoni Defense: Modern Variation"],
     'learn-english': [5, "English Opening: Symmetrical Variation, Two Knights, Fianchetto Variation"]
   };
-  const byMoves = new Map();
-  for (const o of BUNDLED_OPENING_PACK.openings) byMoves.set(o.movesSan.join(' '), o);
+  const byMoves = new Map(), onPath = new Set();
+  for (const o of BUNDLED_OPENING_PACK.openings){
+    byMoves.set(o.movesSan.join(' '), o);
+    for (let n = 1; n <= o.movesSan.length; n++) onPath.add(o.movesSan.slice(0, n).join(' '));
+  }
   const authored = REPERTOIRE_SEED.concat(OPENING_LESSONS);
   eq(authored.length, 74, '40 repertoire lines and 34 lessons');
-  let tails = 0;
+  let tails = 0, leaves = 0;
   for (const e of authored){
     let depth = e.movesSan.length;
     while (depth > 0 && !byMoves.has(e.movesSan.slice(0, depth).join(' '))) depth--;
@@ -5750,8 +5757,14 @@ test('authored lines follow the pinned catalogue; ECO codes and tails match it',
     if (listed){ tails++; eq(found, listed[0] + ' ' + listed[1], e.id + ' continues its catalogue line'); }
     else eq(depth, e.movesSan.length, e.id + ' is a catalogue line move for move (deepest match: ' + found + ')');
     if (depth === e.movesSan.length && e.eco) eq(e.eco, deepest.eco, e.id + ' ECO matches the catalogue');
+    let path = e.movesSan.length;
+    while (path > 0 && !onPath.has(e.movesSan.slice(0, path).join(' '))) path--;
+    if (leavesCatalogue[e.id] !== undefined) leaves++;
+    eq(path, leavesCatalogue[e.id] !== undefined ? leavesCatalogue[e.id] : e.movesSan.length,
+      e.id + ' plies on a catalogue line');
   }
-  eq(tails, Object.keys(extendsLine).length, 'every listed line belongs to an authored entry');
+  eq(tails, Object.keys(extendsLine).length, 'every extendsLine entry belongs to an authored entry');
+  eq(leaves, Object.keys(leavesCatalogue).length, 'every leavesCatalogue entry belongs to an authored entry');
 });
 test('starter openings teach move by move and stay in step with their moves', function(){
   const starters = CT.library.openings.filter(function(e){ return e.starter; });

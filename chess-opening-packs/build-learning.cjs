@@ -1,4 +1,4 @@
-// Authoring source. Run with Node from this folder to regenerate main-families.json.
+// Authoring source. Regenerates main-families.json; paths resolve from this file, so run it from anywhere.
 const fs=require('fs'),path=require('path');
 const catalogue=JSON.parse(fs.readFileSync(path.join(__dirname,'lichess-catalogue.json'),'utf8'));
 const lessons=[];
