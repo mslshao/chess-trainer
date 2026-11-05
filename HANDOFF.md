@@ -10,6 +10,49 @@ requests only `file:` (the document) and `blob:` (the engine worker), with a
 main-thread fallback when workers are unavailable. Progress saves to
 `localStorage`, with an in-memory fallback and a "not persisting" badge.
 
+## Required workflow for future changes
+
+Michael uses the original HTML location below. The repository is the source of
+truth; the OneDrive file is the delivered copy, kept at the same path for normal
+use and existing browser storage. Complete this workflow for future changes:
+
+- Repository: https://github.com/mslshao/chess-trainer
+- Working clone: `C:\src\chess-trainer`
+- Original file used by Michael:
+  `C:\Users\Michael\OneDrive\Documents\Important\GenAI\Games\chess-trainer.html`
+- Local handoff beside that file:
+  `C:\Users\Michael\OneDrive\Documents\Important\GenAI\Games\chess-trainer-handoff.md`
+
+1. Inspect the clone's working state and bring it up to date with `main`, keeping
+   any uncommitted work safe. Make changes in the clone, including edits to the
+   maintained sources of generated blocks. The old OneDrive source folders are
+   historical copies, not build inputs for future work.
+2. Rebuild affected generated content and refresh `library/` as described below.
+   For trainer code or content changes, run `node tests/run-node.cjs` and both
+   browser harnesses from the clone, following `tests/browser/README.md`. The
+   catalogue harness runs the full Edge suite; run the original-position harness
+   with `--ui-only` to avoid duplicating that suite. Require no failures or skips,
+   no browser errors, and only `file:` and `blob:` requests. Report actual counts;
+   never weaken tests to obtain a pass. For documentation-only changes, review
+   the diff and run `git diff --check`; the unchanged trainer need not be retested.
+3. Update this handoff as needed, commit in logical pieces and push to `main`.
+   Confirm the push succeeded and any triggered CI checks passed before copying
+   a changed trainer to Michael's original location. A failed test or push leaves
+   the last delivered trainer in place while the problem is resolved.
+4. Copy the tested, committed and pushed `chess-trainer.html` from the clone over
+   the original file above. Keep a backup of the previous delivered file outside
+   Git before replacing it, and verify the two files have identical SHA-256 hashes.
+   If they already match, no overwrite is needed. Keep the original path intact;
+   do not clear or replace browser save data. Refresh the local handoff from this
+   repository handoff after a successful push so either entry point gives the
+   same instructions. Results, screenshots and backups stay local and ignored.
+5. Report the pushed commit, verification results and successful copy back. If
+   the machine or original path is unavailable, explicitly report delivery as
+   pending; a repository push alone does not finish the local delivery step.
+
+This is the standing delivery workflow requested by Michael. Future work should
+finish with his usual original file updated, while all development stays in Git.
+
 ## Repository layout
 
 | Path | Role |
