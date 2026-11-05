@@ -1,6 +1,6 @@
 # Chess Trainer: handoff
 
-Current state as of 2026-11-05. `docs/HISTORY.md` has the earlier session log and
+Current state as of 2026-11-04 (America/Los_Angeles). `docs/HISTORY.md` has the earlier session log and
 the reasoning behind past decisions; where the two differ, this file wins.
 
 ## What it is
@@ -16,23 +16,45 @@ main-thread fallback when workers are unavailable. Progress saves to
 | --- | --- |
 | `chess-trainer.html` | The deliverable |
 | `library/` | Bundled opening data as JSON, extracted from the HTML by `library/extract.cjs`. Copies, not sources |
+| `chess-opening-packs/` | Offline build sources, catalogue pack, lesson authoring source and pack guide |
 | `tests/run-node.cjs` | The engine suite in Node |
-| `.github/workflows/tests.yml` | Runs the Node suite and fails if `library/` no longer matches the HTML |
+| `tests/browser/` | Portable Edge harnesses and run instructions |
+| `tests/artifacts/` | Ignored local browser results and screenshots |
+| `.github/workflows/tests.yml` | Checks offline rebuild, Node suite and extracted library sync in one Linux job |
 | `docs/HISTORY.md` | Pre-repository session log |
 
-Not committed yet: `chess-opening-packs/` (`build.cjs`, the source modules for
-the generated blocks, and the pack README) and `chess-trainer-checks/` (browser
-harnesses). Until they are, generated blocks can only be edited in the HTML, and a
-rebuild from the local folder would overwrite those edits.
+The GitHub repository is the source of truth. The Windows working clone is outside
+OneDrive. `.gitattributes` keeps text files on LF line endings. The previous local
+HTML matched the original upload SHA-256 exactly, so no local changes needed
+merging. Earlier results, screenshots and HTML backups remain outside the repo.
+
+The catalogue and lesson JSON in `library/` are identical as parsed JSON to
+`chess-opening-packs/lichess-catalogue.json` and `main-families.json`. Those two
+extractions duplicate the build inputs and are retained pending a decision to
+remove them. `repertoire.library.json` is a separate personal-library export.
 
 ## Generated and hand-maintained code
 
-`build.cjs` writes the blocks between these markers: `OFFLINE-BOOK` (catalogue
-pack, family lessons, catalogue logic), `OPENING-TESTS` and `OPENING-UI`. Edit
-their source modules, not the HTML copy. Everything else is hand-maintained in
-the HTML, including `REPERTOIRE_SEED`, `TRAP_SEED` and `PLAN_SEED`. This split is
-inferred from the markers and the old handoff; confirm it against `build.cjs` once
-that is committed.
+`chess-opening-packs/build.cjs` was inspected and run against the repository
+HTML with no diff. It reads these files from its own folder and replaces only
+the corresponding marked blocks in the root `chess-trainer.html`:
+
+- `OFFLINE-BOOK`: `lichess-catalogue.json`, `main-families.json` and
+  `catalogue-engine.js`.
+- `OPENING-TESTS`: `catalogue-tests.js`.
+- `OPENING-UI`: `catalogue-ui.js`.
+
+If markers are absent, the builder inserts the blocks at its named anchors.
+Everything outside those blocks is hand-maintained, including `REPERTOIRE_SEED`,
+`TRAP_SEED`, `PLAN_SEED` and the authored-lines catalogue test following the
+expanded-book validation test. The seven ECO fixes and that test survive a
+rebuild unchanged. Edit generated blocks at their sources.
+
+`build-learning.cjs` authors `main-families.json` from its lesson definitions and
+the pinned catalogue. Both builders use only built-in Node modules and local
+files. From the repo root, run `node chess-opening-packs/build-learning.cjs`,
+`node chess-opening-packs/build.cjs`, then `node library/extract.cjs`. All three
+were verified to leave the generated files unchanged.
 
 ## Versions
 
@@ -45,7 +67,7 @@ that is committed.
 
 ## Landmarks
 
-All present once each as of 2026-11-05.
+All present once each as of 2026-11-04 (America/Los_Angeles).
 
 - Config: `PIVOT_CONFIG`, `GLOSSARY`, `PACING_PRESETS`, `SCENARIO_KINDS`,
   `STATS_CONFIG`, `MATCH_CONFIG`, `DRILL_SET_CONFIG`, `SETUP_CONFIG`,
@@ -70,27 +92,35 @@ source-check list.
 
 ## Verification
 
-- Browser, `?test=1`: 194/194 in headless Chromium 153 at `file://` on
-  2026-11-05, with zero page errors, zero console output, only `file:` and
-  `blob:` requests, and the worker badge on. The last Edge run was 193/193 on
-  2026-11-03, before the catalogue test existed.
-- Node, `node tests/run-node.cjs`: 193/193 in about 17 s. The worker probe is
-  browser-only. `--fast` (or `&fast=1` in the browser) skips four deep perft cases.
-- CI: GitHub Actions runs the Node suite and the `library/` sync check on pushes
-  that touch the HTML, `library/`, `tests/` or the workflow. Linux runner,
-  superseded runs cancelled, 5-minute cap, to stay inside the free allowance.
-- UI flows, screenshots and the degraded modes (worker throws, `localStorage`
-  throws) are checked by the browser harnesses, which are not in the repo yet.
+- Edge 156.0.4314.50, headless at file:// from the Windows clone on 2026-11-04
+  (America/Los_Angeles): 194/194, zero failures or skips. Zero page or console
+  errors; requests used only file: and blob:. Networking was disabled and the
+  test profile was separate from the user's normal browser profile.
+- Node, node tests/run-node.cjs: 193/193, zero failures or skips, in 11.1 s.
+  The worker probe is browser-only. --fast (or &fast=1 in the browser) skips four
+  deep perft cases. The duplicate local engine-test.cjs was not imported.
+- Both browser harnesses passed from the clone. catalogue-browser.cjs covered
+  all 34 lesson study/answer flows, search, paging, bookmarks, position matching,
+  pack lifecycle, persistence and mobile layouts. browser-test.cjs --ui-only
+  covered all 12 original positions, scores after immediate reload, hints, skips,
+  mode transitions, free play and schema-v3 imports. See tests/browser/README.md.
+- Offline builders and library/extract.cjs reproduced the committed generated
+  files with no differences. Imported files were checked for credentials and
+  absolute machine paths; none remain. Results and screenshots are ignored.
+- CI retains one Linux job, superseded-run cancellation and the 5-minute cap.
+  One new step runs both offline builders and git diff --exit-code. The shared
+  push/pull-request path filter now includes chess-opening-packs/**. The job
+  still runs the Node suite and library sync check, with no npm install.
+- Earlier simulated worker/storage fallback checks are recorded in
+  docs/HISTORY.md; those simulations were not rerun during this migration.
 
 ## Remaining work
 
-1. Commit `chess-opening-packs/` and the harness scripts from
-   `chess-trainer-checks/`. Results, screenshots and HTML backups can stay local.
-2. Human source check: annotation prose for all authored lines and traps, and the
+1. Human source check: annotation prose for all authored lines and traps, and the
    moves past the catalogue for the 17 lines in the test table.
-3. Firefox at `file://` has never been run. The expected outcome is the
+2. Firefox at `file://` has never been run. The expected outcome is the
    main-thread fallback badge, which is verified by simulation in Chromium.
-4. Optional, not started: drag-and-drop in the setup editor, and a "Save as
+3. Optional, not started: drag-and-drop in the setup editor, and a "Save as
    scenario" shortcut from it.
 
 ## Conventions

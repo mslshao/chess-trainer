@@ -1,4 +1,4 @@
-# Engine test suite in Node, plus a check that library/ matches the HTML.
+# Offline rebuild, engine suite in Node, and extracted library sync checks.
 # Kept inside the free Actions allowance: Linux only, path-filtered,
 # superseded runs cancelled, and a hard 5-minute cap per run.
 name: Tests
@@ -9,6 +9,7 @@ on:
     paths: &watched
       - chess-trainer.html
       - library/**
+      - chess-opening-packs/**
       - tests/**
       - .github/workflows/tests.yml
   pull_request:
@@ -30,6 +31,8 @@ jobs:
       - uses: actions/setup-node@v7
         with:
           node-version: 22
+      - name: Offline build matches committed files
+        run: node chess-opening-packs/build-learning.cjs && node chess-opening-packs/build.cjs && git diff --exit-code
       - name: Engine test suite
         run: node tests/run-node.cjs
       - name: library/ matches the HTML

@@ -12,8 +12,10 @@ Open `chess-trainer.html` in a browser. Progress saves to `localStorage`.
 - `chess-trainer.html?test=1` runs the full self-test suite (including deep perft).
 - `chess-trainer.html?test=1&fast=1` skips the four deep perft cases.
 - `node tests/run-node.cjs [--fast]` runs the same suite in Node, minus the
-  browser-only worker probe. GitHub Actions runs it, and checks `library/`
-  is in sync with the HTML, on pushes that touch the HTML, `library/` or `tests/`.
+  browser-only worker probe. GitHub Actions runs it, checks the offline rebuild
+  and checks that `library/` is in sync with the HTML. One Linux job watches the
+  HTML, `library/`, `chess-opening-packs/`, `tests/` and the workflow.
+- `tests/browser/README.md` explains the separate offline Edge harnesses.
 
 ## Status and history
 
@@ -28,13 +30,27 @@ Lichess catalogue (opening-pack format), the 34 family lessons, and the built-in
 personal library with its 12 study positions. `node library/extract.cjs`
 regenerates them from the HTML. See `library/README.md`.
 
-## Not yet in this repo
+## Maintaining the build
 
-The opening catalogue, family lessons, engine and test blocks are generated into
-the HTML by `chess-opening-packs/build.cjs`. Those build sources are not
-committed here yet. `library/` holds extracted copies of the data, but the build
-script and source modules exist only outside this repo. Edit the source modules,
-not their generated copies, once they are added.
+The opening catalogue, family lessons, catalogue engine, UI and catalogue tests
+are generated into three marked HTML blocks from `chess-opening-packs/`. Edit
+the sources there, then run from the repository root:
+
+```powershell
+node chess-opening-packs/build-learning.cjs
+node chess-opening-packs/build.cjs
+node library/extract.cjs
+```
+
+All steps run offline on plain Node, without npm install. Other HTML content,
+including the repertoire and its catalogue consistency test, is hand-maintained.
+See `HANDOFF.md` for the exact boundaries and `chess-opening-packs/README.md` for
+the pack format. Generated test results, screenshots and HTML backups are ignored.
+
+Use this repository copy for future work. Keep the clone outside OneDrive to
+avoid syncing Git locks. When moving from the old HTML path, use Save data in
+the old copy to export progress, then import that save in the new copy if needed;
+browser storage for local files can depend on their location.
 
 ## Data
 
