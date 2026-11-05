@@ -12,15 +12,6 @@ fs.mkdirSync(output,{recursive:true});
  const page=await context.newPage(),errors=[],schemes=new Set();
  page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});
  page.on('request',r=>schemes.add(new URL(r.url()).protocol));
- let suite;
- if(!process.argv.includes('--ui-only')){
-  await page.goto(url+'?test=1');await page.waitForFunction(()=>window.__TEST_RESULTS,null,{timeout:240000});
-  suite=await page.evaluate(()=>window.__TEST_RESULTS);
-  console.log(JSON.stringify({total:suite.total,passed:suite.passed,failed:suite.failed,skipped:suite.skipped,failures:suite.cases.filter(c=>c.status==='fail')}));
-  fs.writeFileSync(path.join(output,'catalogue-engine-results.json'),JSON.stringify(suite,null,2));
-  assert.equal(suite.failed,0);assert.equal(suite.skipped,0);assert.equal(suite.passed,suite.total);
-  await page.evaluate(()=>localStorage.clear());
- }
  await page.goto(url);await page.waitForSelector('#btnLibrary');
  const liveFen=await page.locator('#fenOut').innerText();
  const lessons=await page.evaluate(()=>CT.OPENING_LESSONS.map(e=>({id:e.id,name:e.nameEn,card:CT.learningCards(e.id)[0]})));
@@ -43,7 +34,31 @@ fs.mkdirSync(output,{recursive:true});
   assert((await page.locator('#drillBody').innerText()).includes(l.card.why));
   await page.click('#drNext');await page.click('#drExit');assert.equal(await page.locator('#fenOut').innerText(),liveFen);
  }
- await page.reload();await page.click('#btnLibrary');
+ async function checkProgress(){
+  await page.click('#btnStats');
+  for(const label of ['cards seen','attempts'])
+   assert.equal(await page.locator('#dlgStats .st-cell').filter({hasText:label}).locator('.n').innerText(),'34',label+' survives reload');
+  await page.click('#statsClose');
+ }
+ await page.reload();await checkProgress();
+ let suite;
+ if(!process.argv.includes('--ui-only')){
+  const savedBeforeTests=await page.evaluate(()=>localStorage.getItem(CT.STORE_KEY));
+  const keysBeforeTests=await page.evaluate(()=>Object.keys(localStorage).sort());
+  assert(savedBeforeTests,'drill progress must be saved before testing preservation');
+  await page.goto(url+'?test=1');await page.waitForFunction(()=>window.__TEST_RESULTS,null,{timeout:240000});
+  suite=await page.evaluate(()=>window.__TEST_RESULTS);
+  console.log(JSON.stringify({total:suite.total,passed:suite.passed,failed:suite.failed,skipped:suite.skipped,failures:suite.cases.filter(c=>c.status==='fail')}));
+  fs.writeFileSync(path.join(output,'catalogue-engine-results.json'),JSON.stringify(suite,null,2));
+  assert.equal(suite.failed,0);assert.equal(suite.skipped,0);assert.equal(suite.passed,suite.total);
+  assert.equal(await page.evaluate(()=>localStorage.getItem(CT.STORE_KEY)), savedBeforeTests,
+   'the Tests page must leave the normal save byte-for-byte unchanged');
+  assert.deepEqual(await page.evaluate(()=>Object.keys(localStorage).sort()), keysBeforeTests,
+   'the Tests page removes only its own temporary storage');
+  await page.goto(url);await checkProgress();
+  console.log('Saved progress survived reload and the full Tests page: 34 cards, 34 attempts.');
+ }
+ await page.click('#btnLibrary');
  assert.equal(await page.locator('.lesson-card .study-meta').filter({hasText:'1/1 key decisions unaided'}).count(),34);
  await page.selectOption('#learnGroup','Indian defences');assert.equal(await page.locator('.lesson-card').count(),7);
  await page.click('#learnPractise');assert((await page.locator('#drillBody').innerText()).includes('card 1 of 7'));await page.click('#drExit');

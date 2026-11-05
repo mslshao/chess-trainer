@@ -17,9 +17,12 @@ node tests/browser/catalogue-browser.cjs
 node tests/browser/browser-test.cjs --ui-only
 ```
 
-The first command runs the full embedded suite at ?test=1, then checks all 34
-family lessons, catalogue filters, bookmarks, position matching, imports,
-persistence and mobile layouts. The second checks all 12 original study and
+The first command answers all 34 family lesson drills, verifies their Progress
+counts after reload, then runs the full embedded suite at ?test=1. It requires
+the saved data to remain byte-for-byte unchanged, checks temporary test storage
+was removed and verifies Progress again. It also checks catalogue filters,
+bookmarks, position matching, imports, persistence and mobile layouts. The second
+checks all 12 original study and
 practice positions, immediate-reload scores, hints, skips, mode transitions,
 free play and schema-v3 library imports. It explicitly selects My lines & traps.
 Both fail on browser errors or any request scheme other than file: and blob:.

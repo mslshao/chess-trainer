@@ -4441,6 +4441,8 @@ Object.assign(CT, { MATCH_CONFIG, MATCH_POINTS, fmtPoints, createMatch, matchGam
    v1/v2 saves still load; the included catalogue never needs to be saved. */
 const SAVE_VERSION = 3;
 const STORE_KEY = 'chessTrainer.save.v1';
+// The test runner temporarily selects its own key, leaving normal saves alone.
+let _storeKey = STORE_KEY;
 const STORE_CONFIG = { warnBytes: 4 * 1024 * 1024, assumedQuotaBytes: 5 * 1024 * 1024, maxGames: 50 };
 CT.storage = { mode: 'unknown', bytes: 0, lastSaved: null, note: '' };
 let _memoryStore = null;
@@ -4545,7 +4547,7 @@ function saveState(extra){
     return { ok: false, mode: 'memory', bytes: bytes };
   }
   try {
-    localStorage.setItem(STORE_KEY, text);
+    localStorage.setItem(_storeKey, text);
     CT.storage.mode = 'localStorage';
     CT.storage.lastSaved = state.savedAt;
     CT.storage.note = bytes > STORE_CONFIG.warnBytes
@@ -4566,7 +4568,7 @@ function saveState(extra){
 function loadState(){
   let text = null;
   if (storageAvailable()){
-    try { text = localStorage.getItem(STORE_KEY); } catch (e){ text = null; }
+    try { text = localStorage.getItem(_storeKey); } catch (e){ text = null; }
     CT.storage.mode = 'localStorage';
   } else {
     CT.storage.mode = 'memory';
@@ -4592,7 +4594,7 @@ function clearState(){
   CT.library = buildSeedLibrary(); CT.libraryCustomized = false; touchOpeningBook();
   CT.adaptive.strength = null; CT.adaptive.baseTier = null;
   CT.adaptive.pendingDelta = 0; CT.adaptive.pendingReason = ''; CT.adaptive.lastApplied = null;
-  try { if (storageAvailable()) localStorage.removeItem(STORE_KEY); } catch (e){ /* nothing to remove */ }
+  try { if (storageAvailable()) localStorage.removeItem(_storeKey); } catch (e){ /* nothing to remove */ }
   CT.storage.bytes = 0; CT.storage.lastSaved = null;
 }
 function exportSaveFile(extra){ return JSON.stringify(buildSaveState(extra), null, 2); }
@@ -7237,28 +7239,41 @@ test('worker book: imported custom starts and opponent selection reach the actua
 CT.runTests = async function(opts){
   const o = opts || {};
   const prevDev = CT.dev;
+  const previousStore = { key: _storeKey, memory: _memoryStore, status: CT.storage };
+  const testKey = STORE_KEY + '.tests.' + Date.now().toString(36) + '.' + Math.random().toString(36).slice(2);
+  // Exercise real browser storage and reset behaviour without touching user data.
+  _storeKey = testKey;
+  _memoryStore = null;
+  CT.storage = { mode: 'unknown', bytes: 0, lastSaved: null, note: '' };
   CT.dev = true;
   CT.perfStats = { nodes: 0, ms: 0 };
   const cases = [];
   let passed = 0, failed = 0, skipped = 0;
-  for (const t of TESTS){
-    if (t.slow && o.fast){
-      skipped++;
-      cases.push({ name: t.name, status: 'skipped', ms: 0, detail: 'skipped in fast mode' });
-      continue;
+  try {
+    for (const t of TESTS){
+      if (t.slow && o.fast){
+        skipped++;
+        cases.push({ name: t.name, status: 'skipped', ms: 0, detail: 'skipped in fast mode' });
+        continue;
+      }
+      const t0 = Date.now();
+      try {
+        await t.fn();
+        passed++;
+        cases.push({ name: t.name, status: 'pass', ms: Date.now() - t0, detail: '' });
+      } catch (err){
+        failed++;
+        cases.push({ name: t.name, status: 'fail', ms: Date.now() - t0, detail: String((err && err.message) || err) });
+      }
     }
-    const t0 = Date.now();
-    try {
-      await t.fn();
-      passed++;
-      cases.push({ name: t.name, status: 'pass', ms: Date.now() - t0, detail: '' });
-    } catch (err){
-      failed++;
-      cases.push({ name: t.name, status: 'fail', ms: Date.now() - t0, detail: String((err && err.message) || err) });
-    }
+    return { total: TESTS.length, passed, failed, skipped, cases };
+  } finally {
+    try { localStorage.removeItem(testKey); } catch (e){ /* storage may be unavailable */ }
+    _storeKey = previousStore.key;
+    _memoryStore = previousStore.memory;
+    CT.storage = previousStore.status;
+    CT.dev = prevDev;
   }
-  CT.dev = prevDev;
-  return { total: TESTS.length, passed, failed, skipped, cases };
 };
 /*ENGINE-END*/
 </script>
