@@ -17,8 +17,9 @@ Open `chess-trainer.html` in a browser. Progress saves to `localStorage`.
 
 ## Status and history
 
-`HANDOFF.md` is the running session handoff: current state, schema versions,
-verification results, conventions, and remaining work. Newest entries first.
+`HANDOFF.md` is the current state: layout, versions, content, verification,
+remaining work and conventions. `docs/HISTORY.md` is the earlier session log,
+kept for the reasoning behind past decisions.
 
 ## Opening library
 
