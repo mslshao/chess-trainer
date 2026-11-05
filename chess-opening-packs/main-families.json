@@ -1,0 +1,1138 @@
+[
+  {
+    "id": "learn-italian",
+    "nameEn": "Italian Game",
+    "group": "Open games",
+    "family": "Italian Game",
+    "movesSan": [
+      "e4",
+      "e5",
+      "Nf3",
+      "Nc6",
+      "Bc4",
+      "Bc5",
+      "c3",
+      "Nf6",
+      "d3"
+    ],
+    "eco": "C54",
+    "sideToMove": "black",
+    "verified": false,
+    "tag": "lesson",
+    "idea": "Develop the bishop toward f7 and prepare a supported central pawn break.",
+    "whitePlan": "Castle, support e4, and prepare d4 when your pieces can use the opened centre.",
+    "blackPlan": "Develop actively, secure the king, and contest the centre with a well-timed ...d5.",
+    "watch": "An attack on f7 needs concrete support; the bishop alone does not win the pawn.",
+    "sourceField": "https://github.com/lichess-org/chess-openings/blob/3fd6ce992679e4d991a6bb4dade71f2b826c568a/c.tsv",
+    "positions": [
+      {
+        "id": "key-idea",
+        "title": "Italian Game: key idea",
+        "ply": 6,
+        "prompt": "Prepare to support a later d4 advance.",
+        "explanation": "c3 supports d4. In this quiet line White then uses d3 to secure e4 before opening the centre."
+      }
+    ]
+  },
+  {
+    "id": "learn-ruy",
+    "nameEn": "Ruy Lopez",
+    "group": "Open games",
+    "family": "Ruy Lopez",
+    "movesSan": [
+      "e4",
+      "e5",
+      "Nf3",
+      "Nc6",
+      "Bb5",
+      "a6",
+      "Ba4",
+      "Nf6",
+      "O-O"
+    ],
+    "eco": "C78",
+    "sideToMove": "black",
+    "verified": false,
+    "tag": "lesson",
+    "idea": "Pressure the knight that defends e5, then build central pressure while developing.",
+    "whitePlan": "Secure the king and support e4 before preparing c3 and d4 in the closed structures.",
+    "blackPlan": "Develop, defend the centre, and choose when to challenge the bishop or release central tension.",
+    "watch": "Bxc6 followed by Nxe5 does not automatically win a pawn; Black has tactical resources.",
+    "sourceField": "https://github.com/lichess-org/chess-openings/blob/3fd6ce992679e4d991a6bb4dade71f2b826c568a/c.tsv",
+    "positions": [
+      {
+        "id": "key-idea",
+        "title": "Ruy Lopez: key idea",
+        "ply": 8,
+        "prompt": "Your bishop has retreated and Black has developed. Secure your king.",
+        "explanation": "O-O castles and activates the rook. White can now reinforce the centre instead of starting an unsupported attack."
+      }
+    ]
+  },
+  {
+    "id": "learn-scotch",
+    "nameEn": "Scotch Game",
+    "group": "Open games",
+    "family": "Scotch Game",
+    "movesSan": [
+      "e4",
+      "e5",
+      "Nf3",
+      "Nc6",
+      "d4",
+      "exd4",
+      "Nxd4"
+    ],
+    "eco": "C45",
+    "sideToMove": "black",
+    "verified": false,
+    "tag": "lesson",
+    "idea": "Open the centre early and use active piece development.",
+    "whitePlan": "Recapture on d4 with a piece, develop the remaining pieces, and castle.",
+    "blackPlan": "Use the open lines to develop quickly and put pressure on e4.",
+    "watch": "Repeated moves by the central knight can let the opponent catch up in development.",
+    "sourceField": "https://github.com/lichess-org/chess-openings/blob/3fd6ce992679e4d991a6bb4dade71f2b826c568a/c.tsv",
+    "positions": [
+      {
+        "id": "key-idea",
+        "title": "Scotch Game: key idea",
+        "ply": 4,
+        "prompt": "Challenge e5 directly with a central pawn.",
+        "explanation": "d4 opens the centre. After ...exd4, Nxd4 places the knight actively while recovering the pawn."
+      }
+    ]
+  },
+  {
+    "id": "learn-petroff",
+    "nameEn": "Petroff Defence",
+    "group": "Open games",
+    "family": "Petrov's Defense",
+    "movesSan": [
+      "e4",
+      "e5",
+      "Nf3",
+      "Nf6",
+      "Nxe5",
+      "d6",
+      "Nf3",
+      "Nxe4"
+    ],
+    "eco": "C42",
+    "sideToMove": "white",
+    "verified": false,
+    "tag": "lesson",
+    "idea": "Black attacks e4 instead of immediately defending e5.",
+    "whitePlan": "Use central space and natural development to test Black without assuming the symmetry means a draw.",
+    "blackPlan": "Challenge the advanced knight before recovering the pawn, then support the centre.",
+    "watch": "Immediate ...Nxe4 after Nxe5 allows Qe2 with awkward threats.",
+    "sourceField": "https://github.com/lichess-org/chess-openings/blob/3fd6ce992679e4d991a6bb4dade71f2b826c568a/c.tsv",
+    "positions": [
+      {
+        "id": "key-idea",
+        "title": "Petroff Defence: key idea",
+        "ply": 5,
+        "prompt": "Drive the e5 knight away before recovering the e4 pawn.",
+        "explanation": "d6 attacks Ne5. After Nf3, ...Nxe4 recovers the pawn in this standard move order."
+      }
+    ]
+  },
+  {
+    "id": "learn-philidor",
+    "nameEn": "Philidor Defence",
+    "group": "Open games",
+    "family": "Philidor Defense",
+    "movesSan": [
+      "e4",
+      "e5",
+      "Nf3",
+      "d6",
+      "d4",
+      "exd4",
+      "Nxd4"
+    ],
+    "eco": "C41",
+    "sideToMove": "black",
+    "verified": false,
+    "tag": "lesson",
+    "idea": "Black uses a pawn to hold e5, accepting less space for a solid centre.",
+    "whitePlan": "Claim space with d4 and develop into the centre before launching an attack.",
+    "blackPlan": "Complete development and seek a freeing central break when prepared.",
+    "watch": "A compact setup needs active development; defending everything passively leaves little room.",
+    "sourceField": "https://github.com/lichess-org/chess-openings/blob/3fd6ce992679e4d991a6bb4dade71f2b826c568a/c.tsv",
+    "positions": [
+      {
+        "id": "key-idea",
+        "title": "Philidor Defence: key idea",
+        "ply": 4,
+        "prompt": "Take more central space while challenging e5.",
+        "explanation": "d4 attacks e5. The exchange shown here opens lines and lets White recapture with the knight."
+      }
+    ]
+  },
+  {
+    "id": "learn-vienna",
+    "nameEn": "Vienna Game",
+    "group": "Open games",
+    "family": "Vienna Game",
+    "movesSan": [
+      "e4",
+      "e5",
+      "Nc3",
+      "Nf6",
+      "Bc4"
+    ],
+    "eco": "C26",
+    "sideToMove": "black",
+    "verified": false,
+    "tag": "lesson",
+    "idea": "White develops the queenside knight first and keeps several central setups available.",
+    "whitePlan": "Develop, secure the king, and choose between a quiet centre and a prepared f4 advance.",
+    "blackPlan": "Meet White with natural development and look for a well-supported ...d5 break.",
+    "watch": "The f-pawn advance changes king safety; do not play it automatically in every Vienna position.",
+    "sourceField": "https://github.com/lichess-org/chess-openings/blob/3fd6ce992679e4d991a6bb4dade71f2b826c568a/c.tsv",
+    "positions": [
+      {
+        "id": "key-idea",
+        "title": "Vienna Game: key idea",
+        "ply": 4,
+        "prompt": "Develop the light bishop toward f7 in this quiet Vienna line.",
+        "explanation": "Bc4 develops with pressure toward f7. White retains choices about the central pawns rather than committing immediately to a gambit."
+      }
+    ]
+  },
+  {
+    "id": "learn-four-knights",
+    "nameEn": "Four Knights Game",
+    "group": "Open games",
+    "family": "Four Knights Game",
+    "movesSan": [
+      "e4",
+      "e5",
+      "Nf3",
+      "Nc6",
+      "Nc3",
+      "Nf6",
+      "Bb5"
+    ],
+    "eco": "C48",
+    "sideToMove": "black",
+    "verified": false,
+    "tag": "lesson",
+    "idea": "Both sides develop their knights before choosing a bishop setup or central break.",
+    "whitePlan": "Coordinate development, then use d4 or bishop pressure to influence the centre.",
+    "blackPlan": "Keep developing and answer central threats before copying White automatically.",
+    "watch": "Symmetry does not make every mirrored move safe; checks and captures can change the position.",
+    "sourceField": "https://github.com/lichess-org/chess-openings/blob/3fd6ce992679e4d991a6bb4dade71f2b826c568a/c.tsv",
+    "positions": [
+      {
+        "id": "key-idea",
+        "title": "Four Knights Game: key idea",
+        "ply": 4,
+        "prompt": "Bring your second knight toward the centre.",
+        "explanation": "Nc3 develops the b1 knight and protects e4. Black can complete the four-knight setup with ...Nf6."
+      }
+    ]
+  },
+  {
+    "id": "learn-kings-gambit",
+    "nameEn": "King's Gambit",
+    "group": "Open games",
+    "family": "King's Gambit",
+    "movesSan": [
+      "e4",
+      "e5",
+      "f4",
+      "exf4",
+      "Nf3"
+    ],
+    "eco": "C34",
+    "sideToMove": "black",
+    "verified": false,
+    "tag": "lesson",
+    "idea": "White offers the f-pawn to challenge e5 and accelerate activity.",
+    "whitePlan": "Develop quickly and handle king safety while trying to recover the pawn or use the open lines.",
+    "blackPlan": "Consolidate with development; decide whether holding the extra pawn is worth the time.",
+    "watch": "The opened king diagonal makes careless attacking moves costly.",
+    "sourceField": "https://github.com/lichess-org/chess-openings/blob/3fd6ce992679e4d991a6bb4dade71f2b826c568a/c.tsv",
+    "positions": [
+      {
+        "id": "key-idea",
+        "title": "King's Gambit: key idea",
+        "ply": 4,
+        "prompt": "Develop the kingside knight and control h4 after Black accepts the pawn.",
+        "explanation": "Nf3 develops and controls h4, making a direct ...Qh4+ unavailable. White still needs rapid development to justify the pawn offer."
+      }
+    ]
+  },
+  {
+    "id": "learn-bishops",
+    "nameEn": "Bishop's Opening",
+    "group": "Open games",
+    "family": "Bishop's Opening",
+    "movesSan": [
+      "e4",
+      "e5",
+      "Bc4",
+      "Nf6",
+      "d3"
+    ],
+    "eco": "C24",
+    "sideToMove": "black",
+    "verified": false,
+    "tag": "lesson",
+    "idea": "White develops the bishop early, leaving the kingside knight flexible.",
+    "whitePlan": "Support e4, develop the knights, and choose the moment for central expansion.",
+    "blackPlan": "Attack the centre with development and prepare ...d5 when possible.",
+    "watch": "Pressure on f7 is a theme, not a licence to sacrifice without calculation.",
+    "sourceField": "https://github.com/lichess-org/chess-openings/blob/3fd6ce992679e4d991a6bb4dade71f2b826c568a/c.tsv",
+    "positions": [
+      {
+        "id": "key-idea",
+        "title": "Bishop's Opening: key idea",
+        "ply": 4,
+        "prompt": "Support e4 with a pawn and open a path for the other bishop.",
+        "explanation": "d3 protects e4 and opens the c1 bishop diagonal. White can continue developing behind a stable centre."
+      }
+    ]
+  },
+  {
+    "id": "learn-sicilian",
+    "nameEn": "Sicilian Defence",
+    "group": "Replies to 1.e4",
+    "family": "Sicilian Defense",
+    "movesSan": [
+      "e4",
+      "c5",
+      "Nf3",
+      "d6",
+      "d4",
+      "cxd4",
+      "Nxd4",
+      "Nf6",
+      "Nc3"
+    ],
+    "eco": "B54",
+    "sideToMove": "black",
+    "verified": false,
+    "tag": "lesson",
+    "idea": "Black contests the centre with the c-pawn, creating an asymmetric structure.",
+    "whitePlan": "In the Open Sicilian, use the central knight and development lead to create activity.",
+    "blackPlan": "Develop around the chosen pawn structure and use central breaks and the half-open c-file.",
+    "watch": "Najdorf, Dragon, Closed and Alapin positions need different plans; learn a branch before memorising deep lines.",
+    "sourceField": "https://github.com/lichess-org/chess-openings/blob/3fd6ce992679e4d991a6bb4dade71f2b826c568a/b.tsv",
+    "positions": [
+      {
+        "id": "key-idea",
+        "title": "Sicilian Defence: key idea",
+        "ply": 4,
+        "prompt": "Open the centre in this Open Sicilian line.",
+        "explanation": "d4 invites ...cxd4 and Nxd4. White trades the d-pawn for Black's c-pawn and develops an active central knight."
+      }
+    ]
+  },
+  {
+    "id": "learn-french",
+    "nameEn": "French Defence",
+    "group": "Replies to 1.e4",
+    "family": "French Defense",
+    "movesSan": [
+      "e4",
+      "e6",
+      "d4",
+      "d5",
+      "e5",
+      "c5",
+      "c3",
+      "Nc6"
+    ],
+    "eco": "C02",
+    "sideToMove": "white",
+    "verified": false,
+    "tag": "lesson",
+    "idea": "A supported ...d5 challenges White; in the Advance structure the pawn chains define the plans.",
+    "whitePlan": "Support the d4 base, develop, and use the extra space without neglecting the king.",
+    "blackPlan": "Attack d4 with ...c5 and pieces; look for a useful role for the light bishop.",
+    "watch": "Pushing more pawns does not repair an undefended base on d4.",
+    "sourceField": "https://github.com/lichess-org/chess-openings/blob/3fd6ce992679e4d991a6bb4dade71f2b826c568a/c.tsv",
+    "positions": [
+      {
+        "id": "key-idea",
+        "title": "French Defence: key idea",
+        "ply": 5,
+        "prompt": "Challenge the base of White's pawn chain.",
+        "explanation": "c5 attacks d4, the support for e5. After c3, ...Nc6 adds another attacker to the same target."
+      }
+    ]
+  },
+  {
+    "id": "learn-caro",
+    "nameEn": "Caro-Kann Defence",
+    "group": "Replies to 1.e4",
+    "family": "Caro-Kann Defense",
+    "movesSan": [
+      "e4",
+      "c6",
+      "d4",
+      "d5",
+      "e5",
+      "Bf5",
+      "c3",
+      "e6",
+      "Be2"
+    ],
+    "eco": "B12",
+    "sideToMove": "black",
+    "verified": false,
+    "tag": "lesson",
+    "idea": "Black prepares ...d5 while leaving the light bishop a route outside the pawn chain.",
+    "whitePlan": "Use the space advantage, finish development, and watch Black's central breaks.",
+    "blackPlan": "Develop the light bishop before ...e6 in this Advance setup, then challenge the centre.",
+    "watch": "The bishop move order matters: ...e6 first closes the route from c8 to f5.",
+    "sourceField": "https://github.com/lichess-org/chess-openings/blob/3fd6ce992679e4d991a6bb4dade71f2b826c568a/b.tsv",
+    "positions": [
+      {
+        "id": "key-idea",
+        "title": "Caro-Kann Defence: key idea",
+        "ply": 5,
+        "prompt": "Develop the light bishop before closing its diagonal.",
+        "explanation": "Bf5 brings the c8 bishop outside the pawn chain. Black can then play ...e6 without trapping it behind the pawns."
+      }
+    ]
+  },
+  {
+    "id": "learn-scandinavian",
+    "nameEn": "Scandinavian Defence",
+    "group": "Replies to 1.e4",
+    "family": "Scandinavian Defense",
+    "movesSan": [
+      "e4",
+      "d5",
+      "exd5",
+      "Qxd5",
+      "Nc3",
+      "Qa5",
+      "d4",
+      "Nf6"
+    ],
+    "eco": "B01",
+    "sideToMove": "white",
+    "verified": false,
+    "tag": "lesson",
+    "idea": "Black challenges e4 immediately; a queen recapture gives White a developing target.",
+    "whitePlan": "Develop with tempo against the queen, take central space, and complete development.",
+    "blackPlan": "Move the queen to a useful safe square and develop efficiently around the centre.",
+    "watch": "Chasing the queen repeatedly can waste the time gained by the first developing attack.",
+    "sourceField": "https://github.com/lichess-org/chess-openings/blob/3fd6ce992679e4d991a6bb4dade71f2b826c568a/b.tsv",
+    "positions": [
+      {
+        "id": "key-idea",
+        "title": "Scandinavian Defence: key idea",
+        "ply": 4,
+        "prompt": "Develop a knight while attacking the queen.",
+        "explanation": "Nc3 develops and attacks Qd5. Once the queen moves, White can use d4 to occupy the centre."
+      }
+    ]
+  },
+  {
+    "id": "learn-pirc",
+    "nameEn": "Pirc Defence",
+    "group": "Replies to 1.e4",
+    "family": "Pirc Defense",
+    "movesSan": [
+      "e4",
+      "d6",
+      "d4",
+      "Nf6",
+      "Nc3",
+      "g6",
+      "Nf3",
+      "Bg7"
+    ],
+    "eco": "B08",
+    "sideToMove": "white",
+    "verified": false,
+    "tag": "lesson",
+    "idea": "Black allows a broad white centre and prepares to challenge it with pieces and pawn breaks.",
+    "whitePlan": "Develop behind the centre and choose a setup that keeps the king safe.",
+    "blackPlan": "Fianchetto, castle, and choose an appropriate ...c5 or ...e5 challenge.",
+    "watch": "Having space is useful only if the centre can withstand counterattack.",
+    "sourceField": "https://github.com/lichess-org/chess-openings/blob/3fd6ce992679e4d991a6bb4dade71f2b826c568a/b.tsv",
+    "positions": [
+      {
+        "id": "key-idea",
+        "title": "Pirc Defence: key idea",
+        "ply": 7,
+        "prompt": "Complete the kingside fianchetto.",
+        "explanation": "Bg7 develops the bishop onto the long diagonal. Black is preparing to castle and contest the centre."
+      }
+    ]
+  },
+  {
+    "id": "learn-modern",
+    "nameEn": "Modern Defence",
+    "group": "Replies to 1.e4",
+    "family": "Modern Defense",
+    "movesSan": [
+      "e4",
+      "g6",
+      "d4",
+      "Bg7",
+      "Nc3",
+      "d6"
+    ],
+    "eco": "B06",
+    "sideToMove": "white",
+    "verified": false,
+    "tag": "lesson",
+    "idea": "Black fianchettoes before committing the g8 knight, preserving move-order choices.",
+    "whitePlan": "Occupy the centre, develop naturally, and watch for attacks on the pawn chain.",
+    "blackPlan": "Use the long diagonal and choose central breaks according to White's setup.",
+    "watch": "Delaying development too long gives White time to consolidate the space advantage.",
+    "sourceField": "https://github.com/lichess-org/chess-openings/blob/3fd6ce992679e4d991a6bb4dade71f2b826c568a/b.tsv",
+    "positions": [
+      {
+        "id": "key-idea",
+        "title": "Modern Defence: key idea",
+        "ply": 3,
+        "prompt": "Use the square prepared by ...g6 to develop the bishop.",
+        "explanation": "Bg7 completes the fianchetto. The bishop will exert more influence when central pawns move or are exchanged."
+      }
+    ]
+  },
+  {
+    "id": "learn-alekhine",
+    "nameEn": "Alekhine's Defence",
+    "group": "Replies to 1.e4",
+    "family": "Alekhine Defense",
+    "movesSan": [
+      "e4",
+      "Nf6",
+      "e5",
+      "Nd5",
+      "d4",
+      "d6"
+    ],
+    "eco": "B03",
+    "sideToMove": "white",
+    "verified": false,
+    "tag": "lesson",
+    "idea": "Black invites pawn advances and then attacks the extended centre.",
+    "whitePlan": "Gain space while developing enough pieces to support the pawns.",
+    "blackPlan": "Keep the knight safe and undermine the advanced pawns with timely central breaks.",
+    "watch": "Chasing the knight with every pawn can create targets and leave pieces undeveloped.",
+    "sourceField": "https://github.com/lichess-org/chess-openings/blob/3fd6ce992679e4d991a6bb4dade71f2b826c568a/b.tsv",
+    "positions": [
+      {
+        "id": "key-idea",
+        "title": "Alekhine's Defence: key idea",
+        "ply": 5,
+        "prompt": "Challenge the advanced e5 pawn with the d-pawn.",
+        "explanation": "d6 attacks e5, beginning the counterattack against White's advanced centre. Black must keep developing as the tension changes."
+      }
+    ]
+  },
+  {
+    "id": "learn-qgd",
+    "nameEn": "Queen's Gambit Declined",
+    "group": "Queen-pawn openings",
+    "family": "Queen's Gambit Declined",
+    "movesSan": [
+      "d4",
+      "d5",
+      "c4",
+      "e6",
+      "Nc3",
+      "Nf6",
+      "Bg5",
+      "Be7"
+    ],
+    "eco": "D53",
+    "sideToMove": "white",
+    "verified": false,
+    "tag": "lesson",
+    "idea": "Black reinforces d5 with ...e6 and builds a solid central structure.",
+    "whitePlan": "Develop with pressure on d5 and choose when to exchange the c-pawn.",
+    "blackPlan": "Develop, secure the king, and prepare a freeing ...c5 or suitable central exchange.",
+    "watch": "The light bishop needs a development plan because the e6 pawn blocks its diagonal.",
+    "sourceField": "https://github.com/lichess-org/chess-openings/blob/3fd6ce992679e4d991a6bb4dade71f2b826c568a/d.tsv",
+    "positions": [
+      {
+        "id": "key-idea",
+        "title": "Queen's Gambit Declined: key idea",
+        "ply": 3,
+        "prompt": "Support d5 with the e-pawn.",
+        "explanation": "e6 reinforces d5 and opens the f8 bishop diagonal. The c8 bishop is restricted, a trade-off Black must address later."
+      }
+    ]
+  },
+  {
+    "id": "learn-qga",
+    "nameEn": "Queen's Gambit Accepted",
+    "group": "Queen-pawn openings",
+    "family": "Queen's Gambit Accepted",
+    "movesSan": [
+      "d4",
+      "d5",
+      "c4",
+      "dxc4",
+      "Nf3",
+      "Nf6",
+      "e3"
+    ],
+    "eco": "D25",
+    "sideToMove": "black",
+    "verified": false,
+    "tag": "lesson",
+    "idea": "Black takes the c4 pawn and relies on activity to challenge White's centre.",
+    "whitePlan": "Develop and recover c4 under favourable conditions, often using the f1 bishop.",
+    "blackPlan": "Develop quickly and challenge the centre rather than spending many moves defending c4.",
+    "watch": "Trying to keep the extra pawn at any cost can expose the queenside and delay development.",
+    "sourceField": "https://github.com/lichess-org/chess-openings/blob/3fd6ce992679e4d991a6bb4dade71f2b826c568a/d.tsv",
+    "positions": [
+      {
+        "id": "key-idea",
+        "title": "Queen's Gambit Accepted: key idea",
+        "ply": 6,
+        "prompt": "Open a route for the bishop to recover c4.",
+        "explanation": "e3 supports d4 and opens the f1 bishop diagonal toward c4. White prepares to recover the pawn through development."
+      }
+    ]
+  },
+  {
+    "id": "learn-slav",
+    "nameEn": "Slav Defence",
+    "group": "Queen-pawn openings",
+    "family": "Slav Defense",
+    "movesSan": [
+      "d4",
+      "d5",
+      "c4",
+      "c6",
+      "Nf3",
+      "Nf6",
+      "Nc3"
+    ],
+    "eco": "D15",
+    "sideToMove": "black",
+    "verified": false,
+    "tag": "lesson",
+    "idea": "Black supports d5 with the c-pawn, leaving the light bishop diagonal available.",
+    "whitePlan": "Develop and maintain central pressure while watching Black's choices about ...dxc4.",
+    "blackPlan": "Develop the pieces and choose when the light bishop can leave the pawn chain safely.",
+    "watch": "A bishop move can leave b7 or d5 vulnerable; opening the diagonal is only the first step.",
+    "sourceField": "https://github.com/lichess-org/chess-openings/blob/3fd6ce992679e4d991a6bb4dade71f2b826c568a/d.tsv",
+    "positions": [
+      {
+        "id": "key-idea",
+        "title": "Slav Defence: key idea",
+        "ply": 3,
+        "prompt": "Support d5 without moving the e-pawn.",
+        "explanation": "c6 reinforces d5 while keeping c8-h3 open. This gives Black a different bishop-development problem from the Queen's Gambit Declined."
+      }
+    ]
+  },
+  {
+    "id": "learn-semi-slav",
+    "nameEn": "Semi-Slav Defence",
+    "group": "Queen-pawn openings",
+    "family": "Semi-Slav Defense",
+    "movesSan": [
+      "d4",
+      "d5",
+      "c4",
+      "c6",
+      "Nf3",
+      "Nf6",
+      "Nc3",
+      "e6"
+    ],
+    "eco": "D43",
+    "sideToMove": "white",
+    "verified": false,
+    "tag": "lesson",
+    "idea": "Black combines the ...c6 and ...e6 supports for d5, creating a strong but compact centre.",
+    "whitePlan": "Develop the bishops and decide whether to keep central tension or resolve it.",
+    "blackPlan": "Complete development and prepare a freeing ...c5 or ...e5 break.",
+    "watch": "A solid pawn triangle can become passive if the pieces never find active squares.",
+    "sourceField": "https://github.com/lichess-org/chess-openings/blob/3fd6ce992679e4d991a6bb4dade71f2b826c568a/d.tsv",
+    "positions": [
+      {
+        "id": "key-idea",
+        "title": "Semi-Slav Defence: key idea",
+        "ply": 7,
+        "prompt": "Add the e-pawn support to d5 in this Semi-Slav structure.",
+        "explanation": "e6 supports d5 and frees the f8 bishop. Black accepts a restricted light bishop while building a resilient centre."
+      }
+    ]
+  },
+  {
+    "id": "learn-london",
+    "nameEn": "London System",
+    "group": "Queen-pawn openings",
+    "family": "London System",
+    "movesSan": [
+      "d4",
+      "Nf6",
+      "Nf3",
+      "g6",
+      "Bf4",
+      "Bg7",
+      "e3",
+      "d6",
+      "Bd3"
+    ],
+    "eco": "A48",
+    "sideToMove": "black",
+    "verified": false,
+    "tag": "lesson",
+    "idea": "White develops the dark bishop before building an e3-based pawn chain.",
+    "whitePlan": "Support the centre, develop, castle, and prepare e4 when the position permits.",
+    "blackPlan": "Contest the centre with ...c5 or ...e5 and challenge White's comfortable setup.",
+    "watch": "A familiar setup still requires checking threats; opponent moves can change the right move order.",
+    "sourceField": "https://github.com/lichess-org/chess-openings/blob/3fd6ce992679e4d991a6bb4dade71f2b826c568a/a.tsv",
+    "positions": [
+      {
+        "id": "key-idea",
+        "title": "London System: key idea",
+        "ply": 4,
+        "prompt": "Develop the dark bishop outside the future e3 pawn chain.",
+        "explanation": "Bf4 places the bishop actively before e3 blocks its diagonal from c1. White can then support the centre and develop the other bishop."
+      }
+    ]
+  },
+  {
+    "id": "learn-colle",
+    "nameEn": "Colle System",
+    "group": "Queen-pawn openings",
+    "family": "Queen's Pawn Game",
+    "movesSan": [
+      "d4",
+      "d5",
+      "Nf3",
+      "Nf6",
+      "e3",
+      "e6",
+      "Bd3"
+    ],
+    "eco": "D05",
+    "sideToMove": "black",
+    "verified": false,
+    "tag": "lesson",
+    "idea": "White develops behind a d4/e3 centre and prepares an eventual e4 break.",
+    "whitePlan": "Coordinate the pieces, castle, and support e4 before opening the centre.",
+    "blackPlan": "Challenge d4 with ...c5 and develop actively before White achieves the central break.",
+    "watch": "The c1 bishop can remain cramped; the system needs a plan to open the position.",
+    "sourceField": "https://github.com/lichess-org/chess-openings/blob/3fd6ce992679e4d991a6bb4dade71f2b826c568a/d.tsv",
+    "positions": [
+      {
+        "id": "key-idea",
+        "title": "Colle System: key idea",
+        "ply": 6,
+        "prompt": "Develop the light bishop to support the e4 break.",
+        "explanation": "Bd3 develops and controls e4. White should coordinate the remaining pieces before pushing the e-pawn."
+      }
+    ]
+  },
+  {
+    "id": "learn-catalan",
+    "nameEn": "Catalan Opening",
+    "group": "Queen-pawn openings",
+    "family": "Catalan Opening",
+    "movesSan": [
+      "d4",
+      "Nf6",
+      "c4",
+      "e6",
+      "g3",
+      "d5",
+      "Bg2"
+    ],
+    "eco": "E01",
+    "sideToMove": "black",
+    "verified": false,
+    "tag": "lesson",
+    "idea": "White combines the queen-pawn centre with a bishop on the long diagonal.",
+    "whitePlan": "Develop, castle, and use the g2 bishop to pressure the centre and queenside.",
+    "blackPlan": "Choose whether to hold d5 or take c4, while completing development and managing the long diagonal.",
+    "watch": "Recovering a pawn should be balanced against development and the bishop's activity.",
+    "sourceField": "https://github.com/lichess-org/chess-openings/blob/3fd6ce992679e4d991a6bb4dade71f2b826c568a/e.tsv",
+    "positions": [
+      {
+        "id": "key-idea",
+        "title": "Catalan Opening: key idea",
+        "ply": 6,
+        "prompt": "Place the bishop on the diagonal prepared by g3.",
+        "explanation": "Bg2 completes the fianchetto and points toward the central d5 square. Its pressure grows as the centre opens."
+      }
+    ]
+  },
+  {
+    "id": "learn-nimzo",
+    "nameEn": "Nimzo-Indian Defence",
+    "group": "Indian defences",
+    "family": "Nimzo-Indian Defense",
+    "movesSan": [
+      "d4",
+      "Nf6",
+      "c4",
+      "e6",
+      "Nc3",
+      "Bb4",
+      "e3"
+    ],
+    "eco": "E40",
+    "sideToMove": "black",
+    "verified": false,
+    "tag": "lesson",
+    "idea": "Black pins the c3 knight and contests e4 with pieces.",
+    "whitePlan": "Develop and decide how to handle the pin, possible doubled pawns, and the bishop pair.",
+    "blackPlan": "Use the pin and central pressure; exchange on c3 only when it serves the position.",
+    "watch": "The bishop pair and pawn structure are trade-offs, not automatic advantages in every position.",
+    "sourceField": "https://github.com/lichess-org/chess-openings/blob/3fd6ce992679e4d991a6bb4dade71f2b826c568a/e.tsv",
+    "positions": [
+      {
+        "id": "key-idea",
+        "title": "Nimzo-Indian Defence: key idea",
+        "ply": 5,
+        "prompt": "Pin the c3 knight to restrict its influence on e4.",
+        "explanation": "Bb4 pins Nc3 to the king and helps Black control e4. Black may later exchange bishop for knight or keep the tension."
+      }
+    ]
+  },
+  {
+    "id": "learn-queens-indian",
+    "nameEn": "Queen's Indian Defence",
+    "group": "Indian defences",
+    "family": "Queen's Indian Defense",
+    "movesSan": [
+      "d4",
+      "Nf6",
+      "c4",
+      "e6",
+      "Nf3",
+      "b6",
+      "g3",
+      "Bb7"
+    ],
+    "eco": "E15",
+    "sideToMove": "white",
+    "verified": false,
+    "tag": "lesson",
+    "idea": "Black develops the light bishop on the long diagonal to influence central squares.",
+    "whitePlan": "Develop and look for chances to expand with d5 or e4 under favourable conditions.",
+    "blackPlan": "Use the bishop and knights to restrain the centre, then prepare an appropriate pawn break.",
+    "watch": "A long diagonal can be blocked by your own pieces; coordinate them to keep the bishop useful.",
+    "sourceField": "https://github.com/lichess-org/chess-openings/blob/3fd6ce992679e4d991a6bb4dade71f2b826c568a/e.tsv",
+    "positions": [
+      {
+        "id": "key-idea",
+        "title": "Queen's Indian Defence: key idea",
+        "ply": 7,
+        "prompt": "Complete the queenside fianchetto.",
+        "explanation": "Bb7 develops the light bishop toward e4. The bishop and f6 knight can cooperate to contest central space."
+      }
+    ]
+  },
+  {
+    "id": "learn-bogo",
+    "nameEn": "Bogo-Indian Defence",
+    "group": "Indian defences",
+    "family": "Bogo-Indian Defense",
+    "movesSan": [
+      "d4",
+      "Nf6",
+      "c4",
+      "e6",
+      "Nf3",
+      "Bb4+",
+      "Bd2"
+    ],
+    "eco": "E11",
+    "sideToMove": "black",
+    "verified": false,
+    "tag": "lesson",
+    "idea": "Black develops with check before White commits the queenside knight.",
+    "whitePlan": "Meet the check with development and continue building a coordinated centre.",
+    "blackPlan": "Decide whether to exchange the bishop or retreat it while keeping development efficient.",
+    "watch": "A check is useful only if the resulting position supports your plan.",
+    "sourceField": "https://github.com/lichess-org/chess-openings/blob/3fd6ce992679e4d991a6bb4dade71f2b826c568a/e.tsv",
+    "positions": [
+      {
+        "id": "key-idea",
+        "title": "Bogo-Indian Defence: key idea",
+        "ply": 6,
+        "prompt": "Block the check with a developing bishop move.",
+        "explanation": "Bd2 interposes the c1 bishop and challenges Bb4. White develops while meeting the immediate threat."
+      }
+    ]
+  },
+  {
+    "id": "learn-kings-indian",
+    "nameEn": "King's Indian Defence",
+    "group": "Indian defences",
+    "family": "King's Indian Defense",
+    "movesSan": [
+      "d4",
+      "Nf6",
+      "c4",
+      "g6",
+      "Nc3",
+      "Bg7",
+      "e4",
+      "d6",
+      "Nf3",
+      "O-O"
+    ],
+    "eco": "E90",
+    "sideToMove": "white",
+    "verified": false,
+    "tag": "lesson",
+    "idea": "Black allows White a broad centre and prepares counterplay against it.",
+    "whitePlan": "Develop behind the space advantage and respond to Black's central breaks.",
+    "blackPlan": "Castle, finish development, and choose between ...e5 and ...c5 according to the structure.",
+    "watch": "A kingside pawn storm belongs to particular closed structures; it is not the plan in every variation.",
+    "sourceField": "https://github.com/lichess-org/chess-openings/blob/3fd6ce992679e4d991a6bb4dade71f2b826c568a/e.tsv",
+    "positions": [
+      {
+        "id": "key-idea",
+        "title": "King's Indian Defence: key idea",
+        "ply": 7,
+        "prompt": "Control e5 and prepare a central challenge.",
+        "explanation": "d6 restrains e5 and prepares a later ...e5 break. Black should coordinate development and king safety before committing to an attack."
+      }
+    ]
+  },
+  {
+    "id": "learn-grunfeld",
+    "nameEn": "Grünfeld Defence",
+    "group": "Indian defences",
+    "family": "Grünfeld Defense",
+    "movesSan": [
+      "d4",
+      "Nf6",
+      "c4",
+      "g6",
+      "Nc3",
+      "d5",
+      "cxd5",
+      "Nxd5",
+      "e4",
+      "Nxc3",
+      "bxc3"
+    ],
+    "eco": "D85",
+    "sideToMove": "black",
+    "verified": false,
+    "tag": "lesson",
+    "idea": "Black challenges the centre immediately and may allow a large white pawn centre as a target.",
+    "whitePlan": "Support the central pawns with pieces and use the space to develop actively.",
+    "blackPlan": "Attack the centre with the g7 bishop, pawn breaks, and coordinated pieces.",
+    "watch": "A large pawn centre can be strong or vulnerable depending on piece support.",
+    "sourceField": "https://github.com/lichess-org/chess-openings/blob/3fd6ce992679e4d991a6bb4dade71f2b826c568a/d.tsv",
+    "positions": [
+      {
+        "id": "key-idea",
+        "title": "Grünfeld Defence: key idea",
+        "ply": 5,
+        "prompt": "Challenge d4 immediately with a central pawn.",
+        "explanation": "d5 contests the centre. In the Exchange line that follows, White gains a broad pawn centre that Black will try to undermine."
+      }
+    ]
+  },
+  {
+    "id": "learn-benoni",
+    "nameEn": "Modern Benoni",
+    "group": "Indian defences",
+    "family": "Benoni Defense",
+    "movesSan": [
+      "d4",
+      "Nf6",
+      "c4",
+      "c5",
+      "d5",
+      "e6",
+      "Nc3",
+      "exd5",
+      "cxd5",
+      "d6"
+    ],
+    "eco": "A60",
+    "sideToMove": "white",
+    "verified": false,
+    "tag": "lesson",
+    "idea": "The asymmetric pawn structure gives White central space and Black queenside counterplay.",
+    "whitePlan": "Support the d5 pawn, develop, and prepare e4-e5 when it can be sustained.",
+    "blackPlan": "Develop actively and seek counterplay, often using a queenside pawn break.",
+    "watch": "Black's cramped position needs activity; White should not allow counterplay without checking it.",
+    "sourceField": "https://github.com/lichess-org/chess-openings/blob/3fd6ce992679e4d991a6bb4dade71f2b826c568a/a.tsv",
+    "positions": [
+      {
+        "id": "key-idea",
+        "title": "Modern Benoni: key idea",
+        "ply": 5,
+        "prompt": "Challenge the advanced d5 pawn with the e-pawn.",
+        "explanation": "e6 puts pressure on d5. After exchanges, the remaining white d5 pawn gives space while Black seeks activity around it."
+      }
+    ]
+  },
+  {
+    "id": "learn-benko",
+    "nameEn": "Benko Gambit",
+    "group": "Indian defences",
+    "family": "Benko Gambit",
+    "movesSan": [
+      "d4",
+      "Nf6",
+      "c4",
+      "c5",
+      "d5",
+      "b5",
+      "cxb5",
+      "a6"
+    ],
+    "eco": "A57",
+    "sideToMove": "white",
+    "verified": false,
+    "tag": "lesson",
+    "idea": "Black offers a queenside pawn to open files and gain sustained piece activity.",
+    "whitePlan": "Balance the extra pawn against development and queenside pressure; returning material can be a useful option.",
+    "blackPlan": "Develop the bishop and rooks toward the opened queenside files.",
+    "watch": "This pawn offer seeks lasting pressure; it does not promise an immediate tactical win.",
+    "sourceField": "https://github.com/lichess-org/chess-openings/blob/3fd6ce992679e4d991a6bb4dade71f2b826c568a/a.tsv",
+    "positions": [
+      {
+        "id": "key-idea",
+        "title": "Benko Gambit: key idea",
+        "ply": 5,
+        "prompt": "Offer the b-pawn to start opening the queenside.",
+        "explanation": "b5 challenges c4 and offers a pawn. After cxb5, ...a6 continues the plan of opening lines for the black pieces."
+      }
+    ]
+  },
+  {
+    "id": "learn-dutch",
+    "nameEn": "Dutch Defence",
+    "group": "Other systems",
+    "family": "Dutch Defense",
+    "movesSan": [
+      "d4",
+      "f5",
+      "g3",
+      "Nf6",
+      "Bg2",
+      "g6"
+    ],
+    "eco": "A81",
+    "sideToMove": "white",
+    "verified": false,
+    "tag": "lesson",
+    "idea": "Black controls e4 with the f-pawn and accepts changes to king safety.",
+    "whitePlan": "Develop and challenge Black's centre while watching the squares weakened by ...f5.",
+    "blackPlan": "Build a coordinated setup and secure the king before using the kingside space.",
+    "watch": "The f-pawn move opens lines around the king; do not neglect development.",
+    "sourceField": "https://github.com/lichess-org/chess-openings/blob/3fd6ce992679e4d991a6bb4dade71f2b826c568a/a.tsv",
+    "positions": [
+      {
+        "id": "key-idea",
+        "title": "Dutch Defence: key idea",
+        "ply": 1,
+        "prompt": "Use the f-pawn to contest e4 in the Dutch.",
+        "explanation": "f5 controls e4 and gains kingside space. It also changes king safety, so Black must develop carefully."
+      }
+    ]
+  },
+  {
+    "id": "learn-english",
+    "nameEn": "English Opening",
+    "group": "Other systems",
+    "family": "English Opening",
+    "movesSan": [
+      "c4",
+      "c5",
+      "Nc3",
+      "Nc6",
+      "g3",
+      "g6",
+      "Bg2",
+      "Bg7"
+    ],
+    "eco": "A36",
+    "sideToMove": "white",
+    "verified": false,
+    "tag": "lesson",
+    "idea": "White controls central squares from the flank and keeps the central pawns flexible.",
+    "whitePlan": "Develop the fianchetto and choose a central break based on Black's structure.",
+    "blackPlan": "Contest central squares and avoid copying moves when the position calls for a concrete response.",
+    "watch": "The English reaches many structures; plans depend on whether Black uses ...e5, ...c5, or another setup.",
+    "sourceField": "https://github.com/lichess-org/chess-openings/blob/3fd6ce992679e4d991a6bb4dade71f2b826c568a/a.tsv",
+    "positions": [
+      {
+        "id": "key-idea",
+        "title": "English Opening: key idea",
+        "ply": 4,
+        "prompt": "Prepare the bishop for the long diagonal.",
+        "explanation": "g3 prepares Bg2 while leaving the d- and e-pawns flexible. This is a common development plan in the Symmetrical English."
+      }
+    ]
+  },
+  {
+    "id": "learn-reti",
+    "nameEn": "Réti Opening",
+    "group": "Other systems",
+    "family": "Réti Opening",
+    "movesSan": [
+      "Nf3",
+      "d5",
+      "c4"
+    ],
+    "eco": "A09",
+    "sideToMove": "black",
+    "verified": false,
+    "tag": "lesson",
+    "idea": "White develops first and then challenges the centre from the side.",
+    "whitePlan": "Pressure d5, develop flexibly, and decide when to occupy the centre with pawns.",
+    "blackPlan": "Use the available space, develop, and support the centre against flank pressure.",
+    "watch": "Move orders can transpose into other openings; recognise the structure rather than relying only on the name.",
+    "sourceField": "https://github.com/lichess-org/chess-openings/blob/3fd6ce992679e4d991a6bb4dade71f2b826c568a/a.tsv",
+    "positions": [
+      {
+        "id": "key-idea",
+        "title": "Réti Opening: key idea",
+        "ply": 2,
+        "prompt": "Challenge the d5 pawn with your c-pawn.",
+        "explanation": "c4 attacks d5 from the flank. White can then decide how to develop and whether to enter a queen-pawn structure."
+      }
+    ]
+  },
+  {
+    "id": "learn-trompowsky",
+    "nameEn": "Trompowsky Attack",
+    "group": "Other systems",
+    "family": "Trompowsky Attack",
+    "movesSan": [
+      "d4",
+      "Nf6",
+      "Bg5",
+      "e6",
+      "e4"
+    ],
+    "eco": "A45",
+    "sideToMove": "black",
+    "verified": false,
+    "tag": "lesson",
+    "idea": "White develops the dark bishop early and challenges the f6 knight.",
+    "whitePlan": "Use flexible development and decide whether exchanging on f6 helps your central plan.",
+    "blackPlan": "Meet the bishop actively while maintaining development and central control.",
+    "watch": "A trade on f6 changes the pawn structure but also gives up a bishop; assess both consequences.",
+    "sourceField": "https://github.com/lichess-org/chess-openings/blob/3fd6ce992679e4d991a6bb4dade71f2b826c568a/a.tsv",
+    "positions": [
+      {
+        "id": "key-idea",
+        "title": "Trompowsky Attack: key idea",
+        "ply": 2,
+        "prompt": "Develop the dark bishop to challenge Nf6.",
+        "explanation": "Bg5 attacks the knight before White commits the c-pawn. It introduces the choice of exchanging on f6 or retaining the bishop."
+      }
+    ]
+  }
+]

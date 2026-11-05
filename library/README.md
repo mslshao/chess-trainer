@@ -28,7 +28,10 @@ writing, it checks the catalogue with `normaliseOpeningPack` and the library wit
 have no app-side validator; they are written as embedded.
 
 These are copies, not sources. The canonical sources live in
-`chess-opening-packs/` (with `build.cjs`), which is not in this repo yet.
+`chess-opening-packs/` (with `build.cjs`). The catalogue and lesson JSON here
+match that folder as parsed JSON and duplicate those sources. They are retained
+for now; `repertoire.library.json` remains the separate built-in personal-library
+export. Rebuild from the sources before extracting after a content change.
 
 ## Licence
 
