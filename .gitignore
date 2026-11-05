@@ -1,0 +1,7 @@
+# Local test outputs, old check folders and HTML backups.
+/tests/artifacts/
+/chess-trainer-checks/
+/tests/browser/*.png
+/tests/browser/*results.json
+**/chess-trainer.before*.html
+/node_modules/
