@@ -53,6 +53,21 @@ use and existing browser storage. Complete this workflow for future changes:
 This is the standing delivery workflow requested by Michael. Future work should
 finish with his usual original file updated, while all development stays in Git.
 
+## Automated delivery
+
+The standing workflow above is automated. After committing changes on main, run
+`node scripts/deliver.cjs` from the clone. It runs the offline rebuild, library
+export, delivery regression tests, full Node suite and both Edge harnesses, then
+pushes the checked commit, waits for successful GitHub Tests, and updates the
+original trainer and local handoff with backups and SHA-256 verification.
+
+The ignored `.delivery.local.json` contains this machine's destination, backup
+and Playwright module paths. See `scripts/README.md` for setup and failure
+handling. `--check-only` runs local checks without pushing or copying. No option
+skips checks for a delivery. The script refuses dirty worktrees and does not make
+commits. If a replacement fails, it restores earlier replacements from backups;
+if Windows also blocks recovery, it reports the retained backup location.
+
 ## Repository layout
 
 | Path | Role |
@@ -60,6 +75,8 @@ finish with his usual original file updated, while all development stays in Git.
 | `chess-trainer.html` | The deliverable |
 | `library/` | Built-in personal library as importable JSON, exported from the HTML by `library/extract.cjs`. A copy, not a source |
 | `chess-opening-packs/` | Offline build sources, catalogue pack, lesson authoring source and pack guide |
+| `scripts/deliver.cjs` | Check, push and deliver to the original local file |
+| `tests/delivery.test.cjs` | Failure handling and delivery regression tests |
 | `tests/run-node.cjs` | The engine suite in Node |
 | `tests/browser/` | Portable Edge harnesses and run instructions |
 | `tests/artifacts/` | Ignored local browser results and screenshots |
@@ -161,8 +178,9 @@ their remaining moves are the only ones no catalogue line covers:
   absolute machine paths; none remain. Results and screenshots are ignored.
 - CI retains one Linux job, superseded-run cancellation and the 5-minute cap.
   One new step runs both offline builders and git diff --exit-code. The shared
-  push/pull-request path filter now includes chess-opening-packs/**. The job
-  still runs the Node suite and library sync check, with no npm install.
+  push/pull-request path filter includes chess-opening-packs/** and scripts/**.
+  The job also runs delivery regression tests, the Node suite and the library sync
+  check, with no npm install.
 - Earlier simulated worker/storage fallback checks are recorded in
   docs/HISTORY.md; those simulations were not rerun during this migration.
 

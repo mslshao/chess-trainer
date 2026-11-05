@@ -5,3 +5,4 @@
 /tests/browser/*results.json
 **/chess-trainer.before*.html
 /node_modules/
+/.delivery.local.json

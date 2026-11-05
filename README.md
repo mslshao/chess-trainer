@@ -14,7 +14,7 @@ Open `chess-trainer.html` in a browser. Progress saves to `localStorage`.
 - `node tests/run-node.cjs [--fast]` runs the same suite in Node, minus the
   browser-only worker probe. GitHub Actions runs it, checks the offline rebuild
   and checks that `library/` is in sync with the HTML. One Linux job watches the
-  HTML, `library/`, `chess-opening-packs/`, `tests/` and the workflow.
+  HTML, `library/`, `chess-opening-packs/`, `tests/`, `scripts/` and the workflow.
 - `tests/browser/README.md` explains the separate offline Edge harnesses.
 
 ## Status and history
@@ -29,6 +29,19 @@ The catalogue and family lessons live in `chess-opening-packs/`. `library/` hold
 the built-in personal library (40 lines, 4 traps, 3 plans, 12 study positions) as
 importable JSON; `node library/extract.cjs` regenerates it from the HTML. See
 `library/README.md`.
+
+## Check, push and update the original file
+
+After committing changes on main, run:
+
+```powershell
+node scripts/deliver.cjs
+```
+
+This runs all local checks, pushes, waits for GitHub Tests, then backs up and
+updates the original trainer and handoff only on success. The local settings are
+already configured on Michael's machine. See [delivery instructions](scripts/README.md).
+Use `--check-only` to run checks without pushing or copying.
 
 ## Maintaining the build
 
@@ -47,10 +60,9 @@ including the repertoire and its catalogue consistency test, is hand-maintained.
 See `HANDOFF.md` for the exact boundaries and `chess-opening-packs/README.md` for
 the pack format. Generated test results, screenshots and HTML backups are ignored.
 
-Use this repository copy for future work. Keep the clone outside OneDrive to
-avoid syncing Git locks. When moving from the old HTML path, use Save data in
-the old copy to export progress, then import that save in the new copy if needed;
-browser storage for local files can depend on their location.
+Develop in this repository outside OneDrive, then use the delivery command above
+to update Michael's original HTML file. Continue opening that original file for
+normal use, preserving its location and browser saves.
 
 ## Data
 

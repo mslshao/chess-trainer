@@ -11,6 +11,7 @@ on:
       - library/**
       - chess-opening-packs/**
       - tests/**
+      - scripts/**
       - .github/workflows/tests.yml
   pull_request:
     paths: *watched
@@ -33,6 +34,8 @@ jobs:
           node-version: 22
       - name: Offline build matches committed files
         run: node chess-opening-packs/build-learning.cjs && node chess-opening-packs/build.cjs && git diff --exit-code
+      - name: Delivery script regression tests
+        run: node --test tests/delivery.test.cjs
       - name: Engine test suite
         run: node tests/run-node.cjs
       - name: library/ matches the HTML
