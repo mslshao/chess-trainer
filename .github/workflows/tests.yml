@@ -1,0 +1,36 @@
+# Engine test suite in Node, plus a check that library/ matches the HTML.
+# Kept inside the free Actions allowance: Linux only, path-filtered,
+# superseded runs cancelled, and a hard 5-minute cap per run.
+name: Tests
+
+on:
+  push:
+    branches: [main]
+    paths: &watched
+      - chess-trainer.html
+      - library/**
+      - tests/**
+      - .github/workflows/tests.yml
+  pull_request:
+    paths: *watched
+
+concurrency:
+  group: tests-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      - name: Engine test suite
+        run: node tests/run-node.cjs
+      - name: library/ matches the HTML
+        run: node library/extract.cjs && git diff --exit-code -- library/

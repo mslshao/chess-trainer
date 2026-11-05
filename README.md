@@ -11,6 +11,9 @@ Open `chess-trainer.html` in a browser. Progress saves to `localStorage`.
 
 - `chess-trainer.html?test=1` runs the full self-test suite (including deep perft).
 - `chess-trainer.html?test=1&fast=1` skips the four deep perft cases.
+- `node tests/run-node.cjs [--fast]` runs the same suite in Node, minus the
+  browser-only worker probe. GitHub Actions runs it, and checks `library/`
+  is in sync with the HTML, on pushes that touch the HTML, `library/` or `tests/`.
 
 ## Status and history
 
